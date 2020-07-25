@@ -45,6 +45,8 @@ Route::group([ 'namespace' => 'API' ], function ()
         Route::group([ 'namespace' => 'Product', 'as' => 'products.', 'prefix' => 'products', ], function ()
         {
             Route::get('/', 'ProductController@getAll')->name('index' );
+            Route::get('/{product}', 'ProductController@getProduct')->name('get' );
+            Route::get('/{slug}/get', 'ProductController@getProductsBySlug')->name('find-by-slug' );
         });
     });
 });

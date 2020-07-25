@@ -32,4 +32,32 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         );
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function getProductsBySlug( Request $request )
+    {
+        $slugToSearch = $request->slug;
+
+        $products = $this->model::query()
+            ->where( 'active', true )
+            ->where( 'slug', 'like', '%' . $slugToSearch . '%' )
+            ->orWhere( 'description', 'like', '%' . $slugToSearch . '%' )
+            ->paginate(10 );
+
+        $message = 'Products received successfully';
+
+        if ( $products->total() === 0 )
+        {
+            $products   = [];
+            $message    = 'Cannot find products with the given params';
+        }
+
+        return $this->response(
+            $products,
+            $message,
+            config( 'business.http_responses.success.code' )
+        );
+    }
+
 }

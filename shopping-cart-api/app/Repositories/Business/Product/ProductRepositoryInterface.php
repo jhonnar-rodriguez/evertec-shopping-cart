@@ -13,4 +13,12 @@ interface ProductRepositoryInterface extends BaseInterface
      */
     public function getAll( Request $request );
 
+    /**
+     * Get products that matches with the given slug
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function getProductsBySlug( Request $request );
+
 }
