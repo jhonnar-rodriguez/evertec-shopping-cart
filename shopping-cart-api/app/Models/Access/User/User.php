@@ -1,12 +1,22 @@
 <?php namespace App\Models\Access\User;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Access\User\Attribute\UserAttribute;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens,
+        Notifiable,
+        UserAttribute;
+
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table;
 
     /**
      * The attributes that are mass assignable.
@@ -14,7 +24,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name',
+        'last_name',
+        'email',
+        'password',
+        'phone_number',
+        'active',
     ];
 
     /**
@@ -23,15 +38,17 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
+     * @param array $attributes
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function __construct( array $attributes = [] )
+    {
+        parent::__construct( $attributes );
+        $this->table = config( 'business.access.users.table' );
+    }
+
 }
