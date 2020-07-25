@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Access\User\User;
+use App\Models\Business\Product\Product;
 
 return [
 
@@ -8,6 +9,13 @@ return [
         'users' => [
             'model' => User::class,
             'table' => 'users',
+        ],
+    ],
+
+    'core' => [
+        'products' => [
+            'model' => Product::class,
+            'table' => 'products',
         ],
     ],
 
