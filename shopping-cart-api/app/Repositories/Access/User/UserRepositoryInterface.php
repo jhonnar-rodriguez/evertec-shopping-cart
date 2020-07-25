@@ -14,6 +14,14 @@ interface UserRepositoryInterface extends BaseInterface
     public function login( Request $request );
 
     /**
+     * Logout the user revoking the related token
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function logout( Request $request );
+
+    /**
      * Generate the token for the logged user
      *
      * @return array

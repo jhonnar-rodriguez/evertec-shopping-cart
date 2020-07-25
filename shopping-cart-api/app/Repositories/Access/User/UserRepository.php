@@ -52,6 +52,20 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     /**
      * @inheritDoc
      */
+    public function logout( Request $request )
+    {
+        $request->user()->token()->revoke();
+
+        return $this->response(
+            [],
+            'Successfully logged out',
+            config( 'business.http_responses.success.code' )
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function generateAccessToken()
     {
         try

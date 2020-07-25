@@ -3,7 +3,12 @@
 class BaseRepository
 {
     /**
-     * @param array $data
+     * The related model of the instantiated class
+    **/
+    protected $model;
+
+    /**
+     * @param $data
      * @param string $message
      * @param int $status_code
      * @return array|mixed
