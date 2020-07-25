@@ -1,11 +1,11 @@
 <?php namespace App\Models\Business\Product;
 
-use App\Models\Access\User\Attribute\UserAttribute;
+use App\Models\Business\Product\Attribute\ProductAttribute;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use UserAttribute;
+    use ProductAttribute;
 
     /**
      * The database table used by the model.
@@ -26,6 +26,16 @@ class Product extends Model
         'image',
         'price',
         'active',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d h:i:s',
+        'updated_at' => 'datetime:Y-m-d h:i:s',
     ];
 
     /**

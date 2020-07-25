@@ -3,7 +3,7 @@
 class BaseRepository
 {
     /**
-     * @param array $data
+     * @param $data
      * @param string $message
      * @param int $status_code
      * @return array|mixed

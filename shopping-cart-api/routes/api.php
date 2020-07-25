@@ -31,4 +31,20 @@ Route::group([ 'namespace' => 'API' ], function ()
             });
         });
     });
+
+    /**
+     * Product Routes - Protected
+     */
+    Route::group([
+        'namespace'     => 'Business',
+        'as'            => 'business.',
+        'middleware'    => [ 'auth:api' ],
+        'prefix'        => 'business',
+    ], function ()
+    {
+        Route::group([ 'namespace' => 'Product', 'as' => 'products.', 'prefix' => 'products', ], function ()
+        {
+            Route::get('/', 'ProductController@getAll')->name('index' );
+        });
+    });
 });
