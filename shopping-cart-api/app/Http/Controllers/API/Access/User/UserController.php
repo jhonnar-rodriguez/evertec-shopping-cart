@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Access\User\UserLoginRequest;
 use App\Repositories\Access\User\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -23,6 +24,8 @@ class UserController extends Controller
     }
 
     /**
+     * Authenticate and generate a new token if the credentials are valid
+     *
      * @param UserLoginRequest $request
      * @return JsonResponse
      */
@@ -34,6 +37,23 @@ class UserController extends Controller
             $login['data'],
             $login['message'],
             $login['status_code']
+        );
+    }
+
+    /**
+     * Revoke the token to the logged user
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function logout( Request $request ): JsonResponse
+    {
+        $logout = $this->userRepository->logout( $request );
+
+        return $this->generalResponse(
+            $logout['data'],
+            $logout['message'],
+            $logout['status_code']
         );
     }
 

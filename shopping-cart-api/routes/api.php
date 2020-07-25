@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group([ 'namespace' => 'API' ], function () {
-
+Route::group([ 'namespace' => 'API' ], function ()
+{
     /**
      * Access Routes
      */
@@ -24,10 +24,11 @@ Route::group([ 'namespace' => 'API' ], function () {
         Route::group([ 'namespace' => 'User', 'as' => 'user.' ], function ()
         {
             Route::post('/login', 'UserController@login')->name('login' );
+
+            Route::group( [ 'middleware' => [ 'auth:api' ] ], function ()
+            {
+                Route::post('/logout', 'UserController@logout' )->name('logout' );
+            });
         });
     });
-});
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
 });
