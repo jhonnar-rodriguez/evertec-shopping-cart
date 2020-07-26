@@ -22,7 +22,9 @@ trait CartItemRelationship
     public function product()
     {
         return $this->hasOne(
-            config( 'business.core.products.model' )
+            config( 'business.core.products.model' ),
+            'id',
+            'product_id'
         );
     }
 

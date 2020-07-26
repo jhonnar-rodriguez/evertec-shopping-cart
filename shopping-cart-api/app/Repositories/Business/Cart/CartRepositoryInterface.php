@@ -24,4 +24,12 @@ interface CartRepositoryInterface extends BaseInterface
      */
     public function removeFromCart( Request $request, Product $product );
 
+    /**
+     * Get all the products that are in the cart for the logged user
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function getContent( Request $request );
+
 }

@@ -92,6 +92,68 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
     /**
      * @inheritDoc
      **/
+    public function getContent( Request $request )
+    {
+        try
+        {
+            # Getting the cart and the items for the logged user
+            $loggedUserCart = $request->user()->cart;
+            $totalProducts = [];
+            $message = "Cart received successfully";
+            $statusCode = config( 'business.http_responses.success.code' );
+
+            if ( empty( $loggedUserCart ) === true )
+            {
+                $message = "You need to add products to your shopping cart first. Please, try again.";
+                $statusCode = config( 'business.http_responses.bad_request.code' );
+            }
+            else
+            {
+                foreach ( $loggedUserCart->items as $item )
+                {
+                    $product = $item->product;
+
+                    if ( empty( $product ) === true )
+                    {
+                        continue;
+                    }
+
+                    $newProduct = [
+                        'id'        => $product->id,
+                        'name'      => $product->name,
+                        'price'     => $product->price,
+                        'quantity'  => $item->quantity,
+                        'image'     => $product->image,
+                    ];
+
+                    array_push( $totalProducts, $newProduct );
+                }
+            }
+
+            return $this->response(
+                $totalProducts,
+                $message,
+                $statusCode
+            );
+        }
+        catch ( \Exception $exception )
+        {
+            Log::error(
+                "CartRepository.getContent: Something went wrong getting the cart content. Details: " .
+                "{$exception->getMessage()}"
+            );
+
+            return $this->response(
+                [],
+                'Something went wrong getting the cart content, please try again later.',
+                config( 'business.http_responses.server_error.code' )
+            );
+        }
+    }
+
+    /**
+     * @inheritDoc
+     **/
     public function removeFromCart( Request $request, Product $product )
     {
         try
@@ -99,7 +161,7 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
             # Getting the cart and the items for the logged user
             $loggedUserCart = $request->user()->cart;
             $message = "Item successfully removed from the cart";
-            $statusCode = config( 'business.http_responses.not_found.code' );
+            $statusCode = config( 'business.http_responses.bad_request.code' );
 
             if ( empty( $loggedUserCart ) === true )
             {

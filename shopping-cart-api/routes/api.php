@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,6 +52,7 @@ Route::group([ 'namespace' => 'API' ], function ()
         # Cart Routes
         Route::group([ 'namespace' => 'Cart', 'as' => 'cart.', 'prefix' => 'cart', ], function ()
         {
+            Route::get('/', 'CartController@getContent')->name('get-content' );
             Route::post('/{product}/add', 'CartController@addProductToCart')->name('add' );
             Route::delete('/{product}', 'CartController@removeProductFromCart')->name('remove' );
         });

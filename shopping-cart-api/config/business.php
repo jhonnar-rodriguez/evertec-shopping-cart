@@ -41,14 +41,14 @@ return [
             'code'  => 201,
         ],
 
+        'bad_request' => [
+            'text'  => 'BAD_REQUEST',
+            'code'  => 400,
+        ],
+
         'unauthorized' => [
             'text'  => 'Unauthorized',
             'code'  => 401,
-        ],
-
-        'server_error' => [
-            'text'  => 'Server_Error',
-            'code'  => 500,
         ],
 
         'not_found' => [
@@ -59,6 +59,11 @@ return [
         'unprocessable_entity' => [
             'text'  => 'UNPROCESSABLE_ENTITY',
             'code'  => 422,
+        ],
+
+        'server_error' => [
+            'text'  => 'Server_Error',
+            'code'  => 500,
         ],
 
     ],

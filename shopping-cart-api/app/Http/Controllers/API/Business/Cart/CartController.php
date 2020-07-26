@@ -60,4 +60,21 @@ class CartController extends Controller
         );
     }
 
+    /**
+     * Get all the products that are in the cart for the logged user
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getContent( Request $request ): JsonResponse
+    {
+        $cartContent = $this->cartRepository->getContent( $request );
+
+        return $this->generalResponse(
+            $cartContent['data'],
+            $cartContent['message'],
+            $cartContent['status_code']
+        );
+    }
+
 }
