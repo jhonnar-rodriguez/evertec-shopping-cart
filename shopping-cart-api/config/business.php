@@ -36,6 +36,11 @@ return [
             'code'  => 200
         ],
 
+        'created' => [
+            'text'  => 'Created',
+            'code'  => 201
+        ],
+
         'unauthorized' => [
             'text'  => 'Unauthorized',
             'code'  => 401

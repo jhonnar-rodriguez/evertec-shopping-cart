@@ -32,14 +32,6 @@ class CreateCartItemsTable extends Migration
                 ->references('id' )
                 ->on( config( 'business.core.products.table' ) )
                 ->onDelete('cascade');
-
-            # Table primary keys
-            $table->primary([
-                'cart_id',
-                'product_id'
-            ]);
-
-            $table->timestamps();
         });
     }
 

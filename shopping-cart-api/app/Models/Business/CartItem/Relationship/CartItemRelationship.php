@@ -7,8 +7,6 @@ trait CartItemRelationship
      *
      * @return mixed
      */
-    public $incrementing = false;
-
     public function cart()
     {
         return $this->belongsTo(

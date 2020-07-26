@@ -20,8 +20,8 @@ class CreateCartsTable extends Migration
             $table->unsignedInteger('user_id' )->nullable();
             $table->timestamp('created_at' )->default( DB::raw( 'CURRENT_TIMESTAMP' ) );
             $table->timestamp('updated_at' )->nullable();
-            $table->primary('id' );
 
+            # Foreign key
             $table->foreign('user_id' )
                 ->references('id' )
                 ->on(config( 'business.access.users.table' ) )
