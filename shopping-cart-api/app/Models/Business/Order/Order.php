@@ -21,7 +21,6 @@ class Order extends Model
      */
     protected $fillable = [
         'user_id',
-        'cart_id',
         'request_id',
         'process_url',
         'total',

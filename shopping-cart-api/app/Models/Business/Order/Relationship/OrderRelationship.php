@@ -15,16 +15,4 @@ trait OrderRelationship
         );
     }
 
-    /**
-     * The order has one cart
-     *
-     * @return mixed
-     */
-    public function cart()
-    {
-        return $this->hasOne(
-            config( 'business.core.carts.table' )
-        );
-    }
-
 }
