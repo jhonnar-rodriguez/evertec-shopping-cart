@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\Access\User\User;
+use App\Models\Business\Cart\Cart;
+use App\Models\Business\CartItem\CartItem;
 use App\Models\Business\Product\Product;
 
 return [
@@ -16,6 +18,14 @@ return [
         'products' => [
             'model' => Product::class,
             'table' => 'products',
+        ],
+        'carts' => [
+            'model' => Cart::class,
+            'table' => 'carts',
+        ],
+        'cart_items' => [
+            'model' => CartItem::class,
+            'table' => 'cart_items',
         ],
     ],
 
