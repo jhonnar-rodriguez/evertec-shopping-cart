@@ -32,4 +32,12 @@ interface CartRepositoryInterface extends BaseInterface
      */
     public function getContent( Request $request );
 
+    /**
+     * Remove the items that belongs to the logged user cart
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function clearContent( Request $request );
+
 }

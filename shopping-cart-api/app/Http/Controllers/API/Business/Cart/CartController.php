@@ -77,4 +77,21 @@ class CartController extends Controller
         );
     }
 
+    /**
+     * Remove the items that belongs to the logged user cart
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function clearCartContent( Request $request ): JsonResponse
+    {
+        $clearCartContent = $this->cartRepository->clearContent( $request );
+
+        return $this->generalResponse(
+            $clearCartContent['data'],
+            $clearCartContent['message'],
+            $clearCartContent['status_code']
+        );
+    }
+
 }

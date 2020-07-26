@@ -55,6 +55,8 @@ Route::group([ 'namespace' => 'API' ], function ()
             Route::get('/', 'CartController@getContent')->name('get-content' );
             Route::post('/{product}/add', 'CartController@addProductToCart')->name('add' );
             Route::delete('/{product}', 'CartController@removeProductFromCart')->name('remove' );
+            Route::post('/clear-content', 'CartController@clearCartContent')
+                ->name('clear-content' );
         });
 
     });

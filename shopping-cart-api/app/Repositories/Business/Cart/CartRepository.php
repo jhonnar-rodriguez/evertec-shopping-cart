@@ -207,6 +207,49 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
     }
 
     /**
+     * @inheritDoc
+     **/
+    public function clearContent( Request $request )
+    {
+        try
+        {
+            # Getting the cart and the items for the logged user
+            $loggedUserCart = $request->user()->cart;
+            $message = "Cart cleared successfully";
+            $statusCode = config( 'business.http_responses.success.code' );
+
+            if ( empty( $loggedUserCart ) === true )
+            {
+                $message = "You need to add products to your shopping cart first. Please, try again.";
+                $statusCode = config( 'business.http_responses.bad_request.code' );
+            }
+            else
+            {
+                $loggedUserCart->items()->delete();
+            }
+
+            return $this->response(
+                [],
+                $message,
+                $statusCode
+            );
+        }
+        catch ( \Exception $exception )
+        {
+            Log::error(
+                "CartRepository.clearContent: Something went wrong clearing the cart content. Details: " .
+                "{$exception->getMessage()}"
+            );
+
+            return $this->response(
+                [],
+                'Something went wrong clearing the cart content, please try again later.',
+                config( 'business.http_responses.server_error.code' )
+            );
+        }
+    }
+
+    /**
      * Return the user cart based on the logged user.
      * If the user does not have a cart it will create a new one
      * If already has a cart the we will return the same cart
