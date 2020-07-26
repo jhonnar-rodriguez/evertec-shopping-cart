@@ -2,6 +2,8 @@
 
 use App\Repositories\Access\User\UserRepository;
 use App\Repositories\Access\User\UserRepositoryInterface;
+use App\Repositories\Business\Cart\CartRepository;
+use App\Repositories\Business\Cart\CartRepositoryInterface;
 use App\Repositories\Business\Product\ProductRepository;
 use App\Repositories\Business\Product\ProductRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -17,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind( UserRepositoryInterface::class, UserRepository::class );
         $this->app->bind( ProductRepositoryInterface::class, ProductRepository::class );
+        $this->app->bind( CartRepositoryInterface::class, CartRepository::class );
     }
 
     /**

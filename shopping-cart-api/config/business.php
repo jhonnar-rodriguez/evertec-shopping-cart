@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\Access\User\User;
+use App\Models\Business\Cart\Cart;
+use App\Models\Business\CartItem\CartItem;
 use App\Models\Business\Product\Product;
 
 return [
@@ -17,6 +19,14 @@ return [
             'model' => Product::class,
             'table' => 'products',
         ],
+        'carts' => [
+            'model' => Cart::class,
+            'table' => 'carts',
+        ],
+        'cart_items' => [
+            'model' => CartItem::class,
+            'table' => 'cart_items',
+        ],
     ],
 
     'http_responses' => [
@@ -24,6 +34,11 @@ return [
         'success' => [
             'text'  => 'Success',
             'code'  => 200
+        ],
+
+        'created' => [
+            'text'  => 'Created',
+            'code'  => 201
         ],
 
         'unauthorized' => [
