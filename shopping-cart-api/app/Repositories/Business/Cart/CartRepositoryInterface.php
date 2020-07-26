@@ -15,4 +15,13 @@ interface CartRepositoryInterface extends BaseInterface
      */
     public function addToCart( Request $request, Product $product );
 
+    /**
+     * Remove the given product to the cart
+     *
+     * @param Request $request
+     * @param Product $product
+     * @return mixed
+     */
+    public function removeFromCart( Request $request, Product $product );
+
 }

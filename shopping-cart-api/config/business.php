@@ -33,22 +33,32 @@ return [
 
         'success' => [
             'text'  => 'Success',
-            'code'  => 200
+            'code'  => 200,
         ],
 
         'created' => [
             'text'  => 'Created',
-            'code'  => 201
+            'code'  => 201,
         ],
 
         'unauthorized' => [
             'text'  => 'Unauthorized',
-            'code'  => 401
+            'code'  => 401,
         ],
 
         'server_error' => [
             'text'  => 'Server_Error',
-            'code'  => 500
+            'code'  => 500,
+        ],
+
+        'not_found' => [
+            'text'  => 'NOT_FOUND',
+            'code'  => 404,
+        ],
+
+        'unprocessable_entity' => [
+            'text'  => 'UNPROCESSABLE_ENTITY',
+            'code'  => 422,
         ],
 
     ],

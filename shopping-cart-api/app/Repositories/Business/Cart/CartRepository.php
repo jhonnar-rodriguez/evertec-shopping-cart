@@ -1,6 +1,5 @@
 <?php namespace App\Repositories\Business\Cart;
 
-use App\Models\Access\User\User;
 use App\Models\Business\Cart\Cart;
 use App\Models\Business\CartItem\CartItem;
 use App\Models\Business\Product\Product;
@@ -38,7 +37,7 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
     {
         try
         {
-            $productQuantity = ( int ) $request->quantity > 0 ? ( int ) $request->quantity : 15;
+            $productQuantity = ( int ) $request->quantity;
 
             # Getting the cart and the items for the logged user
             $this->loggedUser = $request->user();
@@ -53,8 +52,8 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
                 $cartItems
                     ->where( 'product_id', $productID )
                     ->update([
-                    'quantity' => $productQuantity,
-                ]);
+                        'quantity' => $productQuantity,
+                    ]);
             }
             else
             {
@@ -71,20 +70,75 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
 
             return $this->response(
                 [],
-                'Item successfully added to the cart',
+                "Item successfully added to the cart",
                 config( 'business.http_responses.created.code' )
             );
         }
         catch ( \Exception $exception )
         {
             Log::error(
-                "CartRepository.addToCart: Something went wrong adding the given product to the card. " .
+                "CartRepository.addToCart: Something went wrong adding the given product to the cart. " .
                 "Details: {$exception->getMessage()}"
             );
 
             return $this->response(
                 [],
-                'Something went wrong adding the given product to the card, please try again later.',
+                'Something went wrong adding the given product to the cart, please try again later.',
+                config( 'business.http_responses.server_error.code' )
+            );
+        }
+    }
+
+    /**
+     * @inheritDoc
+     **/
+    public function removeFromCart( Request $request, Product $product )
+    {
+        try
+        {
+            # Getting the cart and the items for the logged user
+            $loggedUserCart = $request->user()->cart;
+            $message = "Item successfully removed from the cart";
+            $statusCode = config( 'business.http_responses.not_found.code' );
+
+            if ( empty( $loggedUserCart ) === true )
+            {
+                $message = "You need to add products to your shopping cart first. Please, try again.";
+            }
+            else
+            {
+                # First we need to check if the product exists in the user shopping cart
+                $getProductQuery = $loggedUserCart->items()->where( 'product_id', $product->id );
+                $productInCart = $getProductQuery->first();
+
+                if ( empty( $productInCart ) === true )
+                {
+                    $message = "The product does not exists in your shopping cart. Please, try again.";
+                }
+                else
+                {
+                    # Remove the product
+                    $getProductQuery->delete();
+                    $statusCode = config( 'business.http_responses.success.code' );
+                }
+            }
+
+            return $this->response(
+                [],
+                $message,
+                $statusCode
+            );
+        }
+        catch ( \Exception $exception )
+        {
+            Log::error(
+                "CartRepository.removeFromCart: Something went wrong removing the product from the " .
+                "cart Details: {$exception->getMessage()}"
+            );
+
+            return $this->response(
+                [],
+                'Something went wrong removing the product from the cart, please try again later.',
                 config( 'business.http_responses.server_error.code' )
             );
         }
@@ -92,7 +146,7 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
 
     /**
      * Return the user cart based on the logged user.
-     * If the user does not have a card it will create a new one
+     * If the user does not have a cart it will create a new one
      * If already has a cart the we will return the same cart
      *
      * @return mixed|null

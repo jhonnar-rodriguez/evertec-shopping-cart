@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\API\Business\Cart;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Business\Product\AddProductToCartRequest;
 use App\Models\Business\Product\Product;
 use App\Repositories\Business\Cart\CartRepositoryInterface;
 use Illuminate\Http\JsonResponse;
@@ -26,11 +27,11 @@ class CartController extends Controller
     /**
      * Add the given product to the cart
      *
-     * @param Request $request
+     * @param AddProductToCartRequest $request
      * @param Product $product
      * @return JsonResponse
      */
-    public function addProductToCart( Request $request, Product $product ): JsonResponse
+    public function addProductToCart( AddProductToCartRequest $request, Product $product ): JsonResponse
     {
         $cart = $this->cartRepository->addToCart( $request, $product );
 
@@ -41,9 +42,22 @@ class CartController extends Controller
         );
     }
 
-    public function getCartContent()
+    /**
+     * Remove the given product from the cart
+     *
+     * @param Request $request
+     * @param Product $product
+     * @return JsonResponse
+     */
+    public function removeProductFromCart( Request $request, Product $product ): JsonResponse
     {
-        dd('Content', \Cart::getContent() );
+        $remove = $this->cartRepository->removeFromCart( $request, $product );
+
+        return $this->generalResponse(
+            $remove['data'],
+            $remove['message'],
+            $remove['status_code']
+        );
     }
 
 }

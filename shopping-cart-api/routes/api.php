@@ -54,6 +54,7 @@ Route::group([ 'namespace' => 'API' ], function ()
         Route::group([ 'namespace' => 'Cart', 'as' => 'cart.', 'prefix' => 'cart', ], function ()
         {
             Route::post('/{product}/add', 'CartController@addProductToCart')->name('add' );
+            Route::delete('/{product}', 'CartController@removeProductFromCart')->name('remove' );
         });
 
     });
