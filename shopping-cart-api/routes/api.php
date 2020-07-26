@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,7 +32,7 @@ Route::group([ 'namespace' => 'API' ], function ()
     });
 
     /**
-     * Product Routes - Protected
+     * Business Routes - Protected
      */
     Route::group([
         'namespace'     => 'Business',
@@ -42,11 +41,24 @@ Route::group([ 'namespace' => 'API' ], function ()
         'prefix'        => 'business',
     ], function ()
     {
+        # Product Routes
         Route::group([ 'namespace' => 'Product', 'as' => 'products.', 'prefix' => 'products', ], function ()
         {
             Route::get('/', 'ProductController@getAll')->name('index' );
             Route::get('/{product}', 'ProductController@getProduct')->name('get' );
             Route::get('/{slug}/get', 'ProductController@getProductsBySlug')->name('find-by-slug' );
         });
+
+        # Cart Routes
+        Route::group([ 'namespace' => 'Cart', 'as' => 'cart.', 'prefix' => 'cart', ], function ()
+        {
+            Route::get('/', 'CartController@getContent')->name('content' );
+            Route::get('/get-total', 'CartController@getTotal')->name('total' );
+            Route::post('/{product}/add', 'CartController@addProductToCart')->name('add' );
+            Route::delete('/{product}', 'CartController@removeProductFromCart')->name('remove' );
+            Route::post('/clear-content', 'CartController@clearCartContent')
+                ->name('clear-content' );
+        });
+
     });
 });

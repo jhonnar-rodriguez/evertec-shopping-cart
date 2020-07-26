@@ -1,6 +1,7 @@
 <?php namespace App\Models\Access\User;
 
 use App\Models\Access\User\Attribute\UserAttribute;
+use App\Models\Access\User\Relationship\UserRelationship;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -9,7 +10,8 @@ class User extends Authenticatable
 {
     use HasApiTokens,
         Notifiable,
-        UserAttribute;
+        UserAttribute,
+        UserRelationship;
 
     /**
      * The database table used by the model.

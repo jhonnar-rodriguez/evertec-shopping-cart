@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class ProductRepository extends BaseRepository implements ProductRepositoryInterface
 {
     /**
-     * UserService constructor.
+     * ProductRepository constructor.
      *
      * @param  Product $product
      */
