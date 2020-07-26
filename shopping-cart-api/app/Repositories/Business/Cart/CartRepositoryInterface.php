@@ -40,4 +40,12 @@ interface CartRepositoryInterface extends BaseInterface
      */
     public function clearContent( Request $request );
 
+    /**
+     * Get the total amount of all the products in the cart for the logged user.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function getTotal( Request $request );
+
 }

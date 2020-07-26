@@ -52,7 +52,8 @@ Route::group([ 'namespace' => 'API' ], function ()
         # Cart Routes
         Route::group([ 'namespace' => 'Cart', 'as' => 'cart.', 'prefix' => 'cart', ], function ()
         {
-            Route::get('/', 'CartController@getContent')->name('get-content' );
+            Route::get('/', 'CartController@getContent')->name('content' );
+            Route::get('/get-total', 'CartController@getTotal')->name('total' );
             Route::post('/{product}/add', 'CartController@addProductToCart')->name('add' );
             Route::delete('/{product}', 'CartController@removeProductFromCart')->name('remove' );
             Route::post('/clear-content', 'CartController@clearCartContent')

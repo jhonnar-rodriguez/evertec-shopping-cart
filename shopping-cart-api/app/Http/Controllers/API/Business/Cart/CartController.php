@@ -94,4 +94,21 @@ class CartController extends Controller
         );
     }
 
+    /**
+     * Get the total amount of all the products in the cart for the logged user.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getTotal( Request $request ): JsonResponse
+    {
+        $cartTotal = $this->cartRepository->getTotal( $request );
+
+        return $this->generalResponse(
+            $cartTotal['data'],
+            $cartTotal['message'],
+            $cartTotal['status_code']
+        );
+    }
+
 }

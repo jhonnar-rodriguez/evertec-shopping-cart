@@ -250,6 +250,46 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
     }
 
     /**
+     * @inheritDoc
+     **/
+    public function getTotal( Request $request )
+    {
+        try
+        {
+            # Getting the cart and the items for the logged user
+            $loggedUserCart = $request->user()->cart;
+            $total = $loggedUserCart
+                ->items
+                ->reduce( function ( $total, CartItem $cartItem )
+                {
+                    $product = $cartItem->product;
+                    return $total + ( $cartItem->quantity * $product->price );
+                }, 0 );
+
+            return $this->response(
+                [
+                    'total' => round( $total, 2 ),
+                ],
+                "Cart total received successfully",
+                config( 'business.http_responses.success.code' )
+            );
+        }
+        catch ( \Exception $exception )
+        {
+            Log::error(
+                "CartRepository.getTotal: Something went wrong getting the cart total. Details: " .
+                "{$exception->getMessage()}"
+            );
+
+            return $this->response(
+                [],
+                'Something went wrong getting the cart total, please try again later.',
+                config( 'business.http_responses.server_error.code' )
+            );
+        }
+    }
+
+    /**
      * Return the user cart based on the logged user.
      * If the user does not have a cart it will create a new one
      * If already has a cart the we will return the same cart
