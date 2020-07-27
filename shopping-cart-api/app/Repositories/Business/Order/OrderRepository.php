@@ -167,6 +167,75 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function get( Request $request, Order $order )
+    {
+        try
+        {
+            # Format the data and make the request to the PlaceToPay service
+            $getOrder = $this->placeToPayService->getOrder( ( int ) $order->request_id );
+
+            if ( $getOrder['success'] === true )
+            {
+                $allowedStatuses = [
+                    'APPROVED' => 'PAYED',
+                    'REJECTED' => 'REJECTED',
+                ];
+
+                # Update the order status in database if it the status is different from the oldest one
+                $orderStatus = $getOrder['status'];
+                if ( in_array( $orderStatus, $allowedStatuses ) && $orderStatus !== $order->status )
+                {
+                    $order->status = $orderStatus;
+                    $order->save();
+                }
+
+                # Remove the database status in order to keep the service response
+                $customOrderData = $order->toArray();
+                unset( $customOrderData['status'] );
+
+                $arrayToReturn = [
+                    'message'   => $getOrder['message'],
+                    'code'      => config( 'business.http_responses.success.code' ),
+                    'data'      => [
+                        'status' => $orderStatus,
+                        'order'  => $customOrderData,
+                    ],
+                ];
+            }
+            else
+            {
+                $arrayToReturn = [
+                    'message'   => $getOrder['message'],
+                    'code'      => config( 'business.http_responses.bad_request.code' ),
+                    'data'      => [],
+                ];
+            }
+
+            return $this->response(
+                $arrayToReturn['data'],
+                $arrayToReturn['message'],
+                $arrayToReturn['code']
+            );
+        }
+        catch ( Exception $exception )
+        {
+            Log::error(
+                "OrderRepository.get: Something went wrong getting the order. Details: " .
+                $exception->getMessage()
+            );
+
+            return $this->response(
+                [],
+                "Something went wrong getting the order",
+                config( 'business.http_responses.server_error.code' )
+            );
+
+        }
+    }
+
+    /**
      * Create a new record in database
      *
      * @param Request $request

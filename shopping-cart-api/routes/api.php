@@ -63,6 +63,7 @@ Route::group([ 'namespace' => 'API' ], function ()
         # Orders Routes
         Route::group([ 'namespace' => 'Order', 'as' => 'orders.', 'prefix' => 'orders', ], function ()
         {
+            Route::get( '/{order}', 'OrderController@get' )->name('get' );
             Route::post( '/{cart}', 'OrderController@create' )->name('create' );
         });
 

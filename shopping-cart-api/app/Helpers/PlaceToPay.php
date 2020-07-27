@@ -81,7 +81,7 @@ class PlaceToPay
      *
      * @return array[]|null
      */
-    private static function prepareAuthData()
+    public static function prepareAuthData()
     {
         try
         {

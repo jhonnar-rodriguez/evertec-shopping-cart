@@ -9,6 +9,8 @@ use stdClass;
 class PlaceToPayService
 {
     /**
+     * Format the data and create a new payment order in PlaceToPay service
+     *
      * @param stdClass $session_data
      * @return array[]|null
      * @throws Exception
@@ -79,6 +81,57 @@ class PlaceToPayService
         }
 
         return $orderData;
+    }
+
+    /**
+     * Get the order by the given ID
+     *
+     * @param int $request_id
+     * @return array[]|null
+     * @throws Exception
+     */
+    public function getOrder( $request_id )
+    {
+        try
+        {
+            # Prepare the data to send the information to PlaceToPay
+            $authData = [
+                'auth' => PlaceToPay::prepareAuthData(),
+            ];
+
+            # Make the request to the PlaceToPay service
+            $orderData = HttpClient::makeRequest( "/api/session/$request_id", 'POST', $authData );
+
+            if ( isset( $orderData['status'] ) === true )
+            {
+                $orderResponse  = $orderData['status'];
+
+                $formattedData = [
+                    'success'   => true,
+                    'status'    => $orderResponse['status'],
+                    'message'   => $orderResponse['message'],
+                ];
+            }
+            else
+            {
+                $formattedData = [
+                    'success'   => false,
+                    'message'   => "Unexpected server response. Please try again later.",
+                ];
+            }
+
+            return $formattedData;
+        }
+        catch ( Exception $exception )
+        {
+            # More information about the error
+            Log::error(
+                "PlaceToPayService.getOrder: Something went wrong getting the order. Details: " .
+                $exception->getMessage()
+            );
+
+            throw new Exception( $exception->getMessage() );
+        }
     }
 
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Business\Order\CreateOrderRequest;
 use App\Models\Business\Cart\Cart;
+use App\Models\Business\Order\Order;
 use App\Repositories\Business\Order\OrderRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -34,6 +35,24 @@ class OrderController extends Controller
     public function create( CreateOrderRequest $request, Cart $cart ): JsonResponse
     {
         $order = $this->orderRepository->create( $request, $cart );
+
+        return $this->generalResponse(
+            $order['data'],
+            $order['message'],
+            $order['status_code']
+        );
+    }
+
+    /**
+     * Get order using the request id
+     *
+     * @param Request $request
+     * @param Cart $cart
+     * @return JsonResponse
+     */
+    public function get( Request $request, Order $order ): JsonResponse
+    {
+        $order = $this->orderRepository->get( $request, $order );
 
         return $this->generalResponse(
             $order['data'],
