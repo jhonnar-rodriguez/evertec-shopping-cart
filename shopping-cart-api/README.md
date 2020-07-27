@@ -25,7 +25,7 @@ If you are not using Homestead, you will need to make sure your server meets the
 
 - Move to the project folder
 
-    ```cd evertec-shopping-cart```
+    ```cd evertec-shopping-cart-api```
  
 - Copy .env.example and rename it to .env
 
