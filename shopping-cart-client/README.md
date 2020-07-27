@@ -1,6 +1,6 @@
 # Shopping Cart Client
 
-Basic store where a customer can buy items. The customer needs to provide his/her name, address, email and phone number to make the purchase.
+Basic store where a customer can buy items.
 
 ## Server Requirements
 
@@ -40,11 +40,21 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
+```npm run lint```
+
+Run the coding style validations and if it fails a list of files and it's problems.
+
+```npm run lint:fix```
+
+Will try to fix all files with errors
+
 ## Built With
 
 - [Create React App](https://create-react-app.dev/docs/getting-started/) - Bootstrapped with Create React App
 - [React](https://es.reactjs.org/) - JavaScript library for building user interfaces.
 - [Npm](https://www.npmjs.com/) - Package Manager and Installer
 
+## Notes
+- If you want the realtime linting while your are writing code on Visual Studio Code you need to install the ESLint extension
 
 ## Enjoy!!
