@@ -35,10 +35,10 @@ Route::group([ 'namespace' => 'API' ], function ()
      * Business Routes - Protected
      */
     Route::group([
-        'namespace'     => 'Business',
-        'as'            => 'business.',
-        'middleware'    => [ 'auth:api' ],
-        'prefix'        => 'business',
+        'namespace' => 'Business',
+        'as' => 'business.',
+        'middleware' => [ 'auth:api' ],
+        'prefix' => 'business',
     ], function ()
     {
         # Product Routes
@@ -58,6 +58,14 @@ Route::group([ 'namespace' => 'API' ], function ()
             Route::delete('/{product}', 'CartController@removeProductFromCart')->name('remove' );
             Route::post('/clear-content', 'CartController@clearCartContent')
                 ->name('clear-content' );
+        });
+
+        # Orders Routes
+        Route::group([ 'namespace' => 'Order', 'as' => 'orders.', 'prefix' => 'orders', ], function ()
+        {
+            Route::get( '/', 'OrderController@getAll' )->name('get-all' );
+            Route::get( '/{order}', 'OrderController@get' )->name('get' );
+            Route::post( '/{cart}', 'OrderController@create' )->name('create' );
         });
 
     });

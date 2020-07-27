@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCartsTable extends Migration
+class CreateOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,18 +14,28 @@ class CreateCartsTable extends Migration
      */
     public function up()
     {
-        Schema::create('carts', function (Blueprint $table)
+        Schema::create('orders', function (Blueprint $table)
         {
             $table->increments( 'id' );
             $table->unsignedInteger('user_id' );
+            $table->unsignedInteger('cart_id' );
+            $table->string( 'request_id' );
+            $table->string( 'process_url' );
+            $table->float( 'total' );
+            $table->enum('status', ['CREATED', 'PAYED', 'REJECTED']);
             $table->timestamp('created_at' )->default( DB::raw( 'CURRENT_TIMESTAMP' ) );
             $table->timestamp('updated_at' )->nullable();
 
-            # Foreign key
+            # Foreign Keys
             $table->foreign('user_id' )
                 ->references('id' )
-                ->on(config( 'business.access.users.table' ) )
-                ->onDelete('cascade' );
+                ->on( config( 'business.access.users.table' ) )
+                ->onDelete('cascade');
+
+            $table->foreign('cart_id' )
+                ->references('id' )
+                ->on( config( 'business.core.carts.table' ) )
+                ->onDelete('cascade');
         });
     }
 
@@ -36,6 +46,6 @@ class CreateCartsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('orders');
     }
 }

@@ -49,8 +49,8 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
         if ( $products->total() === 0 )
         {
-            $products   = [];
-            $message    = 'Cannot find products with the given params';
+            $products = [];
+            $message = 'Cannot find products with the given params';
         }
 
         return $this->response(

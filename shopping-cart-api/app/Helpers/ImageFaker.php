@@ -12,8 +12,8 @@ class ImageFaker extends Image
      *
      * @example 'http://lorempixel.com/640/480/?12345'
      *
-     * @param integer $width
-     * @param integer $height
+     * @param int $width
+     * @param int $height
      * @param string|null $category
      * @param bool $randomize
      * @param string|null $word
@@ -34,7 +34,7 @@ class ImageFaker extends Image
 
         if ($category)
         {
-            if (!in_array($category, static::$categories))
+            if (! in_array($category, static::$categories))
             {
                 throw new \InvalidArgumentException(sprintf('Unknown image category "%s"', $category));
             }
@@ -84,7 +84,7 @@ class ImageFaker extends Image
             $dir = is_null($dir) ? sys_get_temp_dir() : $dir; // GNU/Linux / OS X / Windows compatible
 
             // Validate directory path
-            if (!is_dir($dir) || !is_writable($dir))
+            if (! is_dir($dir) || ! is_writable($dir))
             {
                 $old = umask(0);
                 @mkdir($dir, 0777);
@@ -110,12 +110,13 @@ class ImageFaker extends Image
                 fclose($fp);
                 curl_close($ch);
 
-                if (!$success)
+                if (! $success)
                 {
                     unlink($filepath);
 
                     // could not contact the distant URL or HTTP error - fail silently.
                     $baseUrl = config( 'environment.FAKER_IMAGE_BASE_URL' );
+
                     throw new \InvalidArgumentException(
                         "Something went wrong downloading the image from: $baseUrl. If you have the url over " .
                         "http please change it to https or in the other way. Then try running the migration again."

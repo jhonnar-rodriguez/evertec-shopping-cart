@@ -21,8 +21,8 @@ class Controller extends BaseController
     public function generalResponse( $data, $message, $status_code ): JsonResponse
     {
         return response()->json([
-            'data'      => $data,
-            'message'   => $message,
+            'data' => $data,
+            'message' => $message,
         ], $status_code );
     }
 }

@@ -1,8 +1,9 @@
-<?php namespace App\Http\Requests\Business\Product;
+<?php namespace App\Http\Requests\Business\Order;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class AddProductToCartRequest extends FormRequest
+class CreateOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +23,8 @@ class AddProductToCartRequest extends FormRequest
     public function rules()
     {
         return [
-            'quantity' => [ 'required', 'integer' ],
+            'order_total' => [ 'required', 'numeric', 'min:1' ],
+            'order_status' => [ 'required', 'string', Rule::in( [ 'CREATED' ] ) ],
         ];
     }
 }
