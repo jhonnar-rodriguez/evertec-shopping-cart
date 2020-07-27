@@ -25,4 +25,12 @@ interface OrderRepositoryInterface extends BaseInterface
      */
     public function get( Request $request, Order $order );
 
+    /**
+     * Get all orders in the system
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function getAll( Request $request );
+
 }

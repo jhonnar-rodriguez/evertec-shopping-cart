@@ -6,7 +6,7 @@
 trait UserRelationship
 {
     /**
-     * Return the full name of the given user
+     * An user has one cart
      *
      * @return string
      */
@@ -16,5 +16,18 @@ trait UserRelationship
             config( 'business.core.carts.model' )
         );
     }
+
+    /**
+     * An user has many orders
+     *
+     * @return string
+     */
+    public function orders()
+    {
+        return $this->hasMany(
+            config( 'business.core.orders.model' )
+        );
+    }
+
 
 }

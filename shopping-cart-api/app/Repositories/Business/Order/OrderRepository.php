@@ -236,6 +236,37 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getAll( Request $request )
+    {
+        try
+        {
+            $ordersByUser = $request->user()->orders->toArray();
+
+            return $this->response(
+                $ordersByUser,
+                "Orders were received",
+                config( 'business.http_responses.success.code' )
+            );
+        }
+        catch ( Exception $exception )
+        {
+            Log::error(
+                "OrderRepository.getAll: Something went wrong getting all orders. Details: " .
+                $exception->getMessage()
+            );
+
+            return $this->response(
+                [],
+                "Something went wrong getting all orders",
+                config( 'business.http_responses.server_error.code' )
+            );
+
+        }
+    }
+
+    /**
      * Create a new record in database
      *
      * @param Request $request

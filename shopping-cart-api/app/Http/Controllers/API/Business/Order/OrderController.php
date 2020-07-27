@@ -47,7 +47,7 @@ class OrderController extends Controller
      * Get order using the request id
      *
      * @param Request $request
-     * @param Cart $cart
+     * @param Order $order
      * @return JsonResponse
      */
     public function get( Request $request, Order $order ): JsonResponse
@@ -58,6 +58,23 @@ class OrderController extends Controller
             $order['data'],
             $order['message'],
             $order['status_code']
+        );
+    }
+
+    /**
+     * Get all orders in the system
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getAll( Request $request ): JsonResponse
+    {
+        $orders = $this->orderRepository->getAll( $request);
+
+        return $this->generalResponse(
+            $orders['data'],
+            $orders['message'],
+            $orders['status_code']
         );
     }
 
