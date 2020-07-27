@@ -30,16 +30,16 @@ If you are not using Homestead, you will need to make sure your server meets the
 - Copy .env.example and rename it to .env
 
     ```cp .env.example .env```
-    
+ 
+- Install Dependencies
+
+    ```composer install```
+
 - Generate the application key
 
     ```php artisan key:generate```
 
 - Setup your credentials in the .env file
-
-- Install Dependencies
-
-    ```composer install```
 
 - Run Migrations
 
@@ -49,13 +49,32 @@ If you are not using Homestead, you will need to make sure your server meets the
 
     ```php artisan passport:install```
 
-- Run Seeders
-
-    ```php artisan db:seed```
-
 - Enable Storage Folder
 
     ```php artisan storage:link```
+
+- Run Seeders
+
+    ```php artisan db:seed```
     
 ## API Documentation
 All API End points and documentation can be found [here](https://documenter.getpostman.com/view/3838871/T1DqgH71?version=latest)
+
+## Required Credentials
+Write me an email to jhonnar.rodriguez@gmail.com in order to generate the required credentials. Some of them are:
+- PLACE_TO_PAY_LOGIN=Login
+- PLACE_TO_PAY_SECRET_KEY=TranKey
+- PLACE_TO_PAY_BASE_URL=Testing Service
+- FRONTEND_URL=Your Client URL
+
+## Running Tests
+- Copy the file .env.testing.example and rename it to .env.testing
+- Setup your additional database that will be used only for testing and must be different from the main database
+- Run the command:
+
+    ```composer run-tests```
+
+## Running PHP-CS-Fixer
+Apply the coding standards to the project files, to do that you need to run the following command: ```composer run-phpcs```
+    
+## Enjoy !!
