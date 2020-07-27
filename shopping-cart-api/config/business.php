@@ -4,6 +4,7 @@ use App\Models\Access\User\User;
 use App\Models\Business\Cart\Cart;
 use App\Models\Business\CartItem\CartItem;
 use App\Models\Business\Order\Order;
+use App\Models\Business\OrderItem\OrderItem;
 use App\Models\Business\Product\Product;
 
 return [
@@ -31,6 +32,10 @@ return [
         'orders' => [
             'model' => Order::class,
             'table' => 'orders',
+        ],
+        'order_items' => [
+            'model' => OrderItem::class,
+            'table' => 'order_items',
         ],
     ],
 

@@ -29,7 +29,7 @@ class PlaceToPay
                 $payment_additional_info->total
             );
 
-            $expirationDate = Carbon::now()->addMinutes( 5 )->toIso8601String();
+            $expirationDate = Carbon::now()->addMinutes( 30 )->toIso8601String();
 
             return [
                 'auth'          => $authData,
@@ -92,7 +92,7 @@ class PlaceToPay
             return [
                 'login'     => config( 'environment.PLACE_TO_PAY_LOGIN' ),
                 'seed'      => $authSeed,
-                'nonce'     => $authNonce,
+                'nonce'     => base64_encode( $authNonce ),
                 'tranKey'   => $authTranKey,
             ];
         }
@@ -185,7 +185,7 @@ class PlaceToPay
     /**
      * Random value for each request encoded in base64
      *
-     * @return string
+     * @return string|null
      * @throws Exception
      */
     private static function generateNonce()
@@ -205,7 +205,7 @@ class PlaceToPay
                 $nonce = mt_rand();
             }
 
-            return base64_encode( $nonce );
+            return $nonce;
         }
         catch ( Exception $exception )
         {

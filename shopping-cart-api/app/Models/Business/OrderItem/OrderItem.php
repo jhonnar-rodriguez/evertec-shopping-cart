@@ -1,12 +1,11 @@
-<?php namespace App\Models\Business\Order;
+<?php namespace App\Models\Business\OrderItem;
 
-use App\Models\Business\Order\Attribute\OrderAttribute;
-use App\Models\Business\Order\Relationship\OrderRelationship;
+use App\Models\Business\OrderItem\Relationship\OrderItemRelationship;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class OrderItem extends Model
 {
-    use OrderRelationship, OrderAttribute;
+    use OrderItemRelationship;
 
     /**
      * The database table used by the model.
@@ -21,11 +20,9 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
-        'request_id',
-        'process_url',
-        'total',
-        'status',
+        'order_id',
+        'product_id',
+        'quantity',
     ];
 
     /**
@@ -34,7 +31,7 @@ class Order extends Model
     public function __construct( array $attributes = [] )
     {
         parent::__construct( $attributes );
-        $this->table = config( 'business.core.orders.table' );
+        $this->table = config( 'business.core.order_items.table' );
     }
 
 }

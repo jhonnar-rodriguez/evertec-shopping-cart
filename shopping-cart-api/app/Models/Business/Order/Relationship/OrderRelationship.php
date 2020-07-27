@@ -1,6 +1,5 @@
 <?php namespace App\Models\Business\Order\Relationship;
 
-
 trait OrderRelationship
 {
     /**
@@ -12,6 +11,19 @@ trait OrderRelationship
     {
         return $this->belongsTo(
             config( 'business.access.users.table' )
+        );
+    }
+
+    /**
+     * The order has many products
+     *
+     * @return mixed
+     */
+    public function items()
+    {
+        return $this->hasMany(
+            config( 'business.core.order_items.model' ),
+            'order_id'
         );
     }
 
