@@ -60,5 +60,11 @@ Route::group([ 'namespace' => 'API' ], function ()
                 ->name('clear-content' );
         });
 
+        # Orders Routes
+        Route::group([ 'namespace' => 'Order', 'as' => 'orders.', 'prefix' => 'orders', ], function ()
+        {
+            Route::post( '/{cart}', 'OrderController@create' )->name('create' );
+        });
+
     });
 });
