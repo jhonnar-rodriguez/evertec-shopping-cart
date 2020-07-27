@@ -66,3 +66,15 @@ Write me an email to jhonnar.rodriguez@gmail.com in order to generate the requir
 - PLACE_TO_PAY_SECRET_KEY=TranKey
 - PLACE_TO_PAY_BASE_URL=Testing Service
 - FRONTEND_URL=Your Client URL
+
+## Running Tests
+- Copy the file .env.testing.example and rename it to .env.testing
+- Setup your additional database that will be used only for testing and must be different from the main database
+- Run the command:
+
+    ```composer run-tests```
+
+## Running PHP-CS-Fixer
+Apply the coding standards to the project files, to do that you need to run the following command: ```composer run-phpcs```
+    
+## Enjoy !!
