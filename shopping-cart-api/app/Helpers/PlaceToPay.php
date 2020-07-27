@@ -3,8 +3,8 @@
 use App\Models\Access\User\User;
 use App\Models\Business\Cart\Cart;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use stdClass;
 
 class PlaceToPay
@@ -20,10 +20,10 @@ class PlaceToPay
     {
         try
         {
-            $buyerUser      = $cart->user;
-            $authData       = static::prepareAuthData();
-            $buyerData      = static::prepareBuyerData( $buyerUser );
-            $paymentData    = static::preparePaymentData(
+            $buyerUser = $cart->user;
+            $authData = static::prepareAuthData();
+            $buyerData = static::prepareBuyerData( $buyerUser );
+            $paymentData = static::preparePaymentData(
                 $payment_additional_info->reference,
                 $buyerUser->full_name,
                 $payment_additional_info->total
@@ -32,14 +32,14 @@ class PlaceToPay
             $expirationDate = Carbon::now()->addMinutes( 30 )->toIso8601String();
 
             return [
-                'auth'          => $authData,
-                'buyer'         => $buyerData,
-                'payment'       => $paymentData,
-                'locale'        => 'en_CO',
-                'expiration'    => $expirationDate,
-                'returnUrl'     => $payment_additional_info->return_url,
-                'ipAddress'     => $payment_additional_info->ip,
-                'userAgent'     => $payment_additional_info->user_agent,
+                'auth' => $authData,
+                'buyer' => $buyerData,
+                'payment' => $paymentData,
+                'locale' => 'en_CO',
+                'expiration' => $expirationDate,
+                'returnUrl' => $payment_additional_info->return_url,
+                'ipAddress' => $payment_additional_info->ip,
+                'userAgent' => $payment_additional_info->user_agent,
             ];
         }
         catch ( \Exception $exception )
@@ -65,13 +65,13 @@ class PlaceToPay
      */
     public static function preparePaymentAdditionalInfo( $frontend_url, $order_id, $order_total, $ip, $user_argent )
     {
-        $returnUrl                      = "$frontend_url/$order_id";
-        $additionalInfo                 = new stdClass();
-        $additionalInfo->total          = $order_total;
-        $additionalInfo->reference      = $order_id;
-        $additionalInfo->return_url     = $returnUrl;
-        $additionalInfo->ip             = $ip;
-        $additionalInfo->user_agent     = $user_argent;
+        $returnUrl = "$frontend_url/$order_id";
+        $additionalInfo = new stdClass();
+        $additionalInfo->total = $order_total;
+        $additionalInfo->reference = $order_id;
+        $additionalInfo->return_url = $returnUrl;
+        $additionalInfo->ip = $ip;
+        $additionalInfo->user_agent = $user_argent;
 
         return $additionalInfo;
     }
@@ -85,15 +85,15 @@ class PlaceToPay
     {
         try
         {
-            $authSeed       = static::generateSeed();
-            $authNonce      = static::generateNonce();
-            $authTranKey    = static::generateTranKey( $authNonce, $authSeed );
+            $authSeed = static::generateSeed();
+            $authNonce = static::generateNonce();
+            $authTranKey = static::generateTranKey( $authNonce, $authSeed );
 
             return [
-                'login'     => config( 'environment.PLACE_TO_PAY_LOGIN' ),
-                'seed'      => $authSeed,
-                'nonce'     => base64_encode( $authNonce ),
-                'tranKey'   => $authTranKey,
+                'login' => config( 'environment.PLACE_TO_PAY_LOGIN' ),
+                'seed' => $authSeed,
+                'nonce' => base64_encode( $authNonce ),
+                'tranKey' => $authTranKey,
             ];
         }
         catch ( \Exception $exception )
@@ -117,16 +117,16 @@ class PlaceToPay
     {
         try
         {
-            $dni        = mt_rand( 100000000, 999999999 );
-            $dniType    = 'CC';
+            $dni = mt_rand( 100000000, 999999999 );
+            $dniType = 'CC';
 
             return [
-                'name'          => $user->first_name,
-                'surname'       => $user->last_name,
-                'email'         => $user->email,
-                'document'      => $dni,
-                'documentType'  => $dniType,
-                'mobile'        => $user->phone_number,
+                'name' => $user->first_name,
+                'surname' => $user->last_name,
+                'email' => $user->email,
+                'document' => $dni,
+                'documentType' => $dniType,
+                'mobile' => $user->phone_number,
             ];
         }
         catch ( \Exception $exception )
@@ -153,11 +153,11 @@ class PlaceToPay
         try
         {
             return  [
-                'reference'     => $reference,
-                'description'   => "Basic payment for $user_name",
-                'amount'        => [
+                'reference' => $reference,
+                'description' => "Basic payment for $user_name",
+                'amount' => [
                     'currency' => 'COP',
-                    'total'     => $total,
+                    'total' => $total,
                 ],
             ];
         }

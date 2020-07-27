@@ -16,12 +16,12 @@ $factory->define(/**
     $productSlug = strSlug( $productName );
 
     return [
-        'name'          => $productName,
-        'slug'          => $productSlug,
-        'description'   => $faker->sentence,
-        'price'         => $faker->randomFloat( 2, 10, 500 ),
-        'active'        => true,
-        'image'         => ImageFaker::downloadImage(
+        'name' => $productName,
+        'slug' => $productSlug,
+        'description' => $faker->sentence,
+        'price' => $faker->randomFloat( 2, 10, 500 ),
+        'active' => true,
+        'image' => ImageFaker::downloadImage(
             public_path( 'storage/images' ),
             640,
             480,

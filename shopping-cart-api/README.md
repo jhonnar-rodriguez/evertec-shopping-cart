@@ -17,3 +17,45 @@ If you are not using Homestead, you will need to make sure your server meets the
 - PDO PHP Extension
 - Tokenizer PHP Extension
 - XML PHP Extension
+
+## Installation
+- Clone the project
+
+    ```git clone https://github.com/jhonnar-rodriguez/evertec-shopping-cart.git```
+
+- Move to the project folder
+
+    ```cd evertec-shopping-cart```
+ 
+- Copy .env.example and rename it to .env
+
+    ```cp .env.example .env```
+    
+- Generate the application key
+
+    ```php artisan key:generate```
+
+- Setup your credentials in the .env file
+
+- Install Dependencies
+
+    ```composer install```
+
+- Run Migrations
+
+    ```php artisan migrate```
+
+- Install Laravel Passport
+
+    ```php artisan passport:install```
+
+- Run Seeders
+
+    ```php artisan db:seed```
+
+- Enable Storage Folder
+
+    ```php artisan storage:link```
+    
+## API Documentation
+All API End points and documentation can be found [here](https://documenter.getpostman.com/view/3838871/T1DqgH71?version=latest)

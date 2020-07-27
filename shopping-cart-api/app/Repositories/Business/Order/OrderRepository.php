@@ -92,12 +92,12 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
                 ->createMany($cartItems);
 
             # Required values to set up the request data
-            $initialData               = new stdClass();
+            $initialData = new stdClass();
             $initialData->frontend_url = $frontendURL;
-            $initialData->cart         = $cart;
-            $initialData->order        = $newOrder;
-            $initialData->request_ip   = $request->ip();
-            $initialData->user_agent   = $request->userAgent();
+            $initialData->cart = $cart;
+            $initialData->order = $newOrder;
+            $initialData->request_ip = $request->ip();
+            $initialData->user_agent = $request->userAgent();
 
             # Format the data and make the request to the PlaceToPay service
             $createOrder = $this->placeToPayService->createOrder( $initialData );
@@ -111,31 +111,31 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
                 )
                 {
                     # Update the previous order to add the request_id and return_url
-                    $newOrder->request_id  = $createOrder['request_id'];
+                    $newOrder->request_id = $createOrder['request_id'];
                     $newOrder->process_url = $createOrder['process_url'];
                     $newOrder->save();
 
                     $arrayToReturn = [
-                        'message'   => "Order was created successfully.",
-                        'code'      => config( 'business.http_responses.created.code' ),
-                        'data'      => $newOrder->toArray(),
+                        'message' => "Order was created successfully.",
+                        'code' => config( 'business.http_responses.created.code' ),
+                        'data' => $newOrder->toArray(),
                     ];
                 }
                 else
                 {
                     $arrayToReturn = [
-                        'message'   => 'Unexpected output from service, please try again later.',
-                        'code'      => config( 'business.http_responses.server_error.code' ),
-                        'data'      => [],
+                        'message' => 'Unexpected output from service, please try again later.',
+                        'code' => config( 'business.http_responses.server_error.code' ),
+                        'data' => [],
                     ];
                 }
             }
             else
             {
                 $arrayToReturn = [
-                    'message'   => $createOrder['message'],
-                    'code'      => $createOrder['code'],
-                    'data'      => [],
+                    'message' => $createOrder['message'],
+                    'code' => $createOrder['code'],
+                    'data' => [],
                 ];
             }
 
@@ -196,20 +196,20 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
                 unset( $customOrderData['status'] );
 
                 $arrayToReturn = [
-                    'message'   => $getOrder['message'],
-                    'code'      => config( 'business.http_responses.success.code' ),
-                    'data'      => [
+                    'message' => $getOrder['message'],
+                    'code' => config( 'business.http_responses.success.code' ),
+                    'data' => [
                         'status' => $orderStatus,
-                        'order'  => $customOrderData,
+                        'order' => $customOrderData,
                     ],
                 ];
             }
             else
             {
                 $arrayToReturn = [
-                    'message'   => $getOrder['message'],
-                    'code'      => config( 'business.http_responses.bad_request.code' ),
-                    'data'      => [],
+                    'message' => $getOrder['message'],
+                    'code' => config( 'business.http_responses.bad_request.code' ),
+                    'data' => [],
                 ];
             }
 
@@ -277,11 +277,11 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         $loggedUser = $request->user();
 
         # Order values
-        $order              = new $this->model();
-        $order->user_id     = $loggedUser->id;
-        $order->total       = round( $request->order_total, 2 );
-        $order->status      = $request->order_status;
-        $order->request_id  = null;
+        $order = new $this->model();
+        $order->user_id = $loggedUser->id;
+        $order->total = round( $request->order_total, 2 );
+        $order->status = $request->order_status;
+        $order->request_id = null;
         $order->process_url = null;
 
         return $order;

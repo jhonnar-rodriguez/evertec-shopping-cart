@@ -16,7 +16,7 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
     private $cart;
 
     /**
-     * @var $loggedUser
+     * @var
      */
     private $loggedUser;
 
@@ -41,9 +41,9 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
 
             # Getting the cart and the items for the logged user
             $this->loggedUser = $request->user();
-            $userCart   = $this->handleUserCart();
-            $cartItems  = $userCart->items();
-            $productID  = $product->id;
+            $userCart = $this->handleUserCart();
+            $cartItems = $userCart->items();
+            $productID = $product->id;
 
             $productInCart = $cartItems->where( 'product_id', $productID )->first();
 
@@ -60,9 +60,9 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
                 $cartItems->save(
                     new CartItem(
                         [
-                            'cart_id'       => $userCart->id,
-                            'product_id'    => $productID,
-                            'quantity'      => $productQuantity,
+                            'cart_id' => $userCart->id,
+                            'product_id' => $productID,
+                            'quantity' => $productQuantity,
                         ]
                     )
                 );
@@ -119,11 +119,11 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
                     }
 
                     $newProduct = [
-                        'id'        => $product->id,
-                        'name'      => $product->name,
-                        'price'     => $product->price,
-                        'quantity'  => $item->quantity,
-                        'image'     => $product->image,
+                        'id' => $product->id,
+                        'name' => $product->name,
+                        'price' => $product->price,
+                        'quantity' => $item->quantity,
+                        'image' => $product->image,
                     ];
 
                     array_push( $totalProducts, $newProduct );
@@ -263,6 +263,7 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
                 ->reduce( function ( $total, CartItem $cartItem )
                 {
                     $product = $cartItem->product;
+
                     return $total + ( $cartItem->quantity * $product->price );
                 }, 0 );
 
@@ -333,7 +334,7 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
             $this->loggedUser->cart()
                 ->create(
                     [
-                        'created_at' => Carbon::now()
+                        'created_at' => Carbon::now(),
                     ]
                 );
 

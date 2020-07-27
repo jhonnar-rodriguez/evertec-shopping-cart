@@ -59,31 +59,31 @@ class Handler extends ExceptionHandler
         if ( $exception instanceof NotFoundHttpException )
             return response()->json( [
                 'success' => false,
-                'message' => 'The resource you are looking for, does not exists.'
+                'message' => 'The resource you are looking for, does not exists.',
             ], 404 );
 
         if ( $exception instanceof MethodNotAllowedHttpException )
             return response()->json( [
                 'success' => false,
-                'message' => 'This route does not support the given method.'
+                'message' => 'This route does not support the given method.',
             ], 405 );
 
         if ( $exception instanceof OAuthServerException )
             return response()->json( [
                 'success' => false,
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             ], 400 );
 
         if ( $exception instanceof ModelNotFoundException )
             return response()->json( [
                 'success' => false,
-                'message' => 'The resource you are looking for, does not exists.'
+                'message' => 'The resource you are looking for, does not exists.',
             ], 404 );
 
         if ( $exception instanceof AuthenticationException )
             return response()->json( [
                 'success' => false,
-                'message' => 'User unauthenticated or invalid token.'
+                'message' => 'User unauthenticated or invalid token.',
             ], 401 );
 
         return parent::render($request, $exception);

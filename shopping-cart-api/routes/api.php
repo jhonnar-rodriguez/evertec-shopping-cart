@@ -35,10 +35,10 @@ Route::group([ 'namespace' => 'API' ], function ()
      * Business Routes - Protected
      */
     Route::group([
-        'namespace'     => 'Business',
-        'as'            => 'business.',
-        'middleware'    => [ 'auth:api' ],
-        'prefix'        => 'business',
+        'namespace' => 'Business',
+        'as' => 'business.',
+        'middleware' => [ 'auth:api' ],
+        'prefix' => 'business',
     ], function ()
     {
         # Product Routes

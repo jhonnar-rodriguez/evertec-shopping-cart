@@ -16,9 +16,9 @@ class BaseRepository
     public function response( $data, $message, int $status_code )
     {
         return [
-            'data'          => $data,
-            'message'       => $message,
-            'status_code'   => $status_code,
+            'data' => $data,
+            'message' => $message,
+            'status_code' => $status_code,
         ];
     }
 

@@ -21,14 +21,14 @@ class UsersTableSeeder extends Seeder
 
         DB::table( $usersTable )
             ->insert([
-                'first_name'        => 'Admin',
-                'last_name'         => 'Evertec',
-                'email'             => 'admin@evertect.com',
-                'password'          => bcrypt( 'password' ),
-                'phone_number'      => 31915464609,
-                'active'            => true,
-                'remember_token'    => Str::random(10),
-                'created_at'        => Carbon::now(),
+                'first_name' => 'Admin',
+                'last_name' => 'Evertec',
+                'email' => 'admin@evertect.com',
+                'password' => bcrypt( 'password' ),
+                'phone_number' => 31915464609,
+                'active' => true,
+                'remember_token' => Str::random(10),
+                'created_at' => Carbon::now(),
             ]);
     }
 }

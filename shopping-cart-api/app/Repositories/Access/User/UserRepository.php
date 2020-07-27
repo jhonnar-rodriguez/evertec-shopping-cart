@@ -23,22 +23,22 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
                 if ( $accessToken['success'] === true )
                 {
-                    $data   = $accessToken['data'];
+                    $data = $accessToken['data'];
                 }
 
                 $statusCode = $accessToken['code'];
-                $message    = $accessToken['message'];
+                $message = $accessToken['message'];
             }
             else
             {
                 $message = config( 'business.http_responses.unauthorized.text' );
-                $statusCode =  config( 'business.http_responses.unauthorized.code' );
+                $statusCode = config( 'business.http_responses.unauthorized.code' );
             }
         }
         catch ( \Exception $exception )
         {
             $statusCode = config( 'business.http_responses.server_error.code' );
-            $message    = 'Something went wrong trying to login the given user. Please try again.';
+            $message = 'Something went wrong trying to login the given user. Please try again.';
 
             Log::error(
                 "UserRepository.generateAccessToken: Something went wrong trying to login the given user. " .
@@ -78,27 +78,27 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             $loggedUser = auth()->user();
 
             $userInfo = [
-                'full_name'     => $loggedUser->full_name,
-                'email'         => $loggedUser->email,
-                'member_since'  => $loggedUser->created_at->diffForHumans(),
+                'full_name' => $loggedUser->full_name,
+                'email' => $loggedUser->email,
+                'member_since' => $loggedUser->created_at->diffForHumans(),
             ];
 
             $tokenResponse = [
-                'success'   => true,
-                'code'      => config( 'business.http_responses.success.code' ),
-                'message'   => 'User Logged In Successfully',
+                'success' => true,
+                'code' => config( 'business.http_responses.success.code' ),
+                'message' => 'User Logged In Successfully',
                 'data' => [
                     'user' => $userInfo,
-                    'access_token' => $accessToken
+                    'access_token' => $accessToken,
                 ],
             ];
         }
         catch ( \Exception $exception )
         {
             $tokenResponse = [
-                'success'   => false,
-                'code'      => config( 'business.http_responses.server_error.code' ),
-                'message'   => 'Something went wrong generating the token to the given user. Please try again.',
+                'success' => false,
+                'code' => config( 'business.http_responses.server_error.code' ),
+                'message' => 'Something went wrong generating the token to the given user. Please try again.',
             ];
 
             Log::error(

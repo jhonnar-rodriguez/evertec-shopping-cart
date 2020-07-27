@@ -36,17 +36,17 @@ class PlaceToPayService
             );
 
             # Make the request to the PlaceToPay service
-            $requestData    = HttpClient::makeRequest( '/api/session', 'POST', $paymentData );
-            $requestStatus  = isset( $requestData['status']['status'] ) ? $requestData['status']['status'] : null;
+            $requestData = HttpClient::makeRequest( '/api/session', 'POST', $paymentData );
+            $requestStatus = isset( $requestData['status']['status'] ) ? $requestData['status']['status'] : null;
 
             if ( $requestStatus === "OK" )
             {
                 $orderData = [
-                    'success'       => true,
-                    'message'       => isset( $requestData['status']['message'] ) ? $requestData['status']['message'] : null,
-                    'request_id'    => isset( $requestData['requestId'] ) ? $requestData['requestId'] : null,
-                    'process_url'   => isset( $requestData['processUrl'] ) ? $requestData['processUrl'] : null,
-                    'code'          => config( 'business.http_responses.success.code' ),
+                    'success' => true,
+                    'message' => isset( $requestData['status']['message'] ) ? $requestData['status']['message'] : null,
+                    'request_id' => isset( $requestData['requestId'] ) ? $requestData['requestId'] : null,
+                    'process_url' => isset( $requestData['processUrl'] ) ? $requestData['processUrl'] : null,
+                    'code' => config( 'business.http_responses.success.code' ),
                 ];
             }
             else
@@ -63,9 +63,9 @@ class PlaceToPayService
                 }
 
                 $orderData = [
-                    'success'   => false,
-                    'message'   => $message,
-                    'code'      => config( 'business.http_responses.bad_request.code' ),
+                    'success' => false,
+                    'message' => $message,
+                    'code' => config( 'business.http_responses.bad_request.code' ),
                 ];
             }
         }
@@ -104,19 +104,19 @@ class PlaceToPayService
 
             if ( isset( $orderData['status'] ) === true )
             {
-                $orderResponse  = $orderData['status'];
+                $orderResponse = $orderData['status'];
 
                 $formattedData = [
-                    'success'   => true,
-                    'status'    => $orderResponse['status'],
-                    'message'   => $orderResponse['message'],
+                    'success' => true,
+                    'status' => $orderResponse['status'],
+                    'message' => $orderResponse['message'],
                 ];
             }
             else
             {
                 $formattedData = [
-                    'success'   => false,
-                    'message'   => "Unexpected server response. Please try again later.",
+                    'success' => false,
+                    'message' => "Unexpected server response. Please try again later.",
                 ];
             }
 

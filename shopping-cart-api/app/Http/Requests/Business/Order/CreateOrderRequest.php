@@ -23,8 +23,8 @@ class CreateOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'order_total'   =>  [ 'required', 'numeric', 'min:1' ],
-            'order_status'  =>  [ 'required', 'string', Rule::in( [ 'CREATED' ] ) ],
+            'order_total' => [ 'required', 'numeric', 'min:1' ],
+            'order_status' => [ 'required', 'string', Rule::in( [ 'CREATED' ] ) ],
         ];
     }
 }

@@ -42,38 +42,38 @@ return [
     'http_responses' => [
 
         'success' => [
-            'text'  => 'Success',
-            'code'  => 200,
+            'text' => 'Success',
+            'code' => 200,
         ],
 
         'created' => [
-            'text'  => 'Created',
-            'code'  => 201,
+            'text' => 'Created',
+            'code' => 201,
         ],
 
         'bad_request' => [
-            'text'  => 'BAD_REQUEST',
-            'code'  => 400,
+            'text' => 'BAD_REQUEST',
+            'code' => 400,
         ],
 
         'unauthorized' => [
-            'text'  => 'Unauthorized',
-            'code'  => 401,
+            'text' => 'Unauthorized',
+            'code' => 401,
         ],
 
         'not_found' => [
-            'text'  => 'NOT_FOUND',
-            'code'  => 404,
+            'text' => 'NOT_FOUND',
+            'code' => 404,
         ],
 
         'unprocessable_entity' => [
-            'text'  => 'UNPROCESSABLE_ENTITY',
-            'code'  => 422,
+            'text' => 'UNPROCESSABLE_ENTITY',
+            'code' => 422,
         ],
 
         'server_error' => [
-            'text'  => 'Server_Error',
-            'code'  => 500,
+            'text' => 'Server_Error',
+            'code' => 500,
         ],
 
     ],

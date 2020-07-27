@@ -24,9 +24,9 @@ class HttpClient
             if ( empty( $baseUrl ) === true )
             {
                 return [
-                    'success'   => false,
-                    'message'   => 'Environment variable PLACE_TO_PAY_BASE_URL cannot be empty',
-                    'code'      => config( 'business.http_responses.bad_request.code' ),
+                    'success' => false,
+                    'message' => 'Environment variable PLACE_TO_PAY_BASE_URL cannot be empty',
+                    'code' => config( 'business.http_responses.bad_request.code' ),
                 ];
             }
 
