@@ -21,15 +21,15 @@ class Cart extends Model
      */
     protected $fillable = [
         'user_id',
+        'key',
     ];
 
     /**
      * @param array $attributes
      */
-    public function __construct( array $attributes = [] )
+    public function __construct(array $attributes = [])
     {
-        parent::__construct( $attributes );
-        $this->table = config( 'business.core.carts.table' );
+        parent::__construct($attributes);
+        $this->table = config('business.core.carts.table');
     }
-
 }

@@ -14,23 +14,22 @@ class CreateCartItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('cart_items', function (Blueprint $table)
-        {
-            $table->unsignedInteger('cart_id' );
-            $table->unsignedInteger('product_id' );
-            $table->unsignedInteger('quantity' );
-            $table->timestamp('created_at' )->default( DB::raw( 'CURRENT_TIMESTAMP' ) );
-            $table->timestamp('updated_at' )->nullable();
+        Schema::create('cart_items', function (Blueprint $table) {
+            $table->unsignedInteger('cart_id');
+            $table->unsignedInteger('product_id');
+            $table->unsignedInteger('quantity');
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->nullable();
 
             # Foreign Keys
-            $table->foreign('cart_id' )
-                ->references('id' )
-                ->on( config( 'business.core.carts.table' ) )
+            $table->foreign('cart_id')
+                ->references('id')
+                ->on(config('business.core.carts.table'))
                 ->onDelete('cascade');
 
-            $table->foreign('product_id' )
-                ->references('id' )
-                ->on( config( 'business.core.products.table' ) )
+            $table->foreign('product_id')
+                ->references('id')
+                ->on(config('business.core.products.table'))
                 ->onDelete('cascade');
         });
     }

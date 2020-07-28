@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RemoveCartIdFromOrders extends Migration
+class RemoveUserForeignFromCartsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class RemoveCartIdFromOrders extends Migration
      */
     public function up()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->dropForeign('orders_cart_id_foreign');
-            $table->dropIndex('orders_cart_id_foreign');
-            $table->dropColumn('cart_id');
+        Schema::table('carts', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropIndex('carts_user_id_foreign');
         });
     }
 
@@ -27,7 +26,7 @@ class RemoveCartIdFromOrders extends Migration
      */
     public function down()
     {
-        Schema::table('orders', function (Blueprint $table) {
+        Schema::table('carts', function (Blueprint $table) {
             //
         });
     }

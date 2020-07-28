@@ -14,18 +14,17 @@ class CreateCartsTable extends Migration
      */
     public function up()
     {
-        Schema::create('carts', function (Blueprint $table)
-        {
-            $table->increments( 'id' );
-            $table->unsignedInteger('user_id' );
-            $table->timestamp('created_at' )->default( DB::raw( 'CURRENT_TIMESTAMP' ) );
-            $table->timestamp('updated_at' )->nullable();
+        Schema::create('carts', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('user_id');
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->nullable();
 
             # Foreign key
-            $table->foreign('user_id' )
-                ->references('id' )
-                ->on(config( 'business.access.users.table' ) )
-                ->onDelete('cascade' );
+            $table->foreign('user_id')
+                ->references('id')
+                ->on(config('business.access.users.table'))
+                ->onDelete('cascade');
         });
     }
 
