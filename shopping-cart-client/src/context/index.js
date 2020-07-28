@@ -4,3 +4,5 @@ export { default as CartContext } from './cart/CartContext';
 export { default as CartState } from './cart/CartState';
 export { default as AlertContext } from './alert/AlertContext';
 export { default as AlertState } from './alert/AlertState';
+export { default as AuthContext } from './auth/AuthContext';
+export { default as AuthState } from './auth/AuthState';

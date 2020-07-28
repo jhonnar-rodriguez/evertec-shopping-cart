@@ -1,9 +1,10 @@
 import React from 'react';
 import { AppRouter } from './router';
 import {
-  ProductState,
   CartState,
   AlertState,
+  AuthState,
+  ProductState,
 } from './context';
 
 import { initAuth } from './config';
@@ -13,13 +14,15 @@ initAuth();
 
 function App() {
   return (
-    <AlertState>
-      <ProductState>
-        <CartState>
-          <AppRouter />
-        </CartState>
-      </ProductState>
-    </AlertState>
+    <AuthState>
+      <AlertState>
+        <ProductState>
+          <CartState>
+            <AppRouter />
+          </CartState>
+        </ProductState>
+      </AlertState>
+    </AuthState>
   );
 }
 

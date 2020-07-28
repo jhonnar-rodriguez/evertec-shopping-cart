@@ -65,8 +65,28 @@ const getCartTotal = (defaultTotal = 0) => {
 
 };
 
+/**
+ * Save the received token in localStorage
+ *
+ * @param {*} token
+ */
+const saveTokenInLocalStorage = (token) => {
+  localStorage.setItem('token', token);
+};
+
+/**
+ * Remove the token from localStorage
+ *
+ * @param {*} token
+ */
+const removeTokenFromLocalStorage = (token) => {
+  localStorage.removeItem('token');
+};
+
 export {
-  formatResponse,
   generateKey,
   getCartTotal,
+  formatResponse,
+  saveTokenInLocalStorage,
+  removeTokenFromLocalStorage,
 };

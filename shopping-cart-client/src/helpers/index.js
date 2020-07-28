@@ -1,1 +1,7 @@
-export { formatResponse, generateKey, getCartTotal } from './Helpers';
+export {
+  getCartTotal,
+  generateKey,
+  formatResponse,
+  saveTokenInLocalStorage,
+  removeTokenFromLocalStorage,
+} from './Helpers';
