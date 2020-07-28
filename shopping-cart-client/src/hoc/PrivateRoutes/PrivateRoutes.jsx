@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const PrivateRoutes = (props) => {
   const { isAuthenticated, component: Component, ...rest } = props;
-  localStorage.setItem('lastPath', rest.location.pathname);
+  localStorage.setItem('last_path', rest.location.pathname);
 
   return (
     <Route

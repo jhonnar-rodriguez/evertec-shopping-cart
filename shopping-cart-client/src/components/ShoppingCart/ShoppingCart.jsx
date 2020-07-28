@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   Badge,
-  IconButton,
+  Button,
 } from '@material-ui/core';
 
 import {
@@ -13,14 +14,18 @@ const ShoppingCart = (props) => {
   const { totalItems } = props;
 
   return (
-    <IconButton color='inherit'>
+    <Button
+      to='/cart'
+      color='inherit'
+      component={RouterLink}
+    >
       <Badge
         badgeContent={totalItems}
         color='secondary'
       >
         <ShoppingCartIcon />
       </Badge>
-    </IconButton>
+    </Button>
   );
 };
 

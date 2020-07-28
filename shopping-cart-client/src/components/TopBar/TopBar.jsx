@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -6,6 +6,8 @@ import {
   Toolbar,
   Button,
 } from '@material-ui/core';
+
+import { CartContext } from '../../context';
 
 // App components
 import ShoppingCart from '../ShoppingCart';
@@ -45,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 const TopBar = (props) => {
   const classes = useStyles();
-  const [totalItems] = useState(0);
+  const { total: totalItems } = useContext(CartContext);
 
   return (
     <AppBar position='absolute' className={classes.appBar}>

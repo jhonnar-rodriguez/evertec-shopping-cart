@@ -14,6 +14,7 @@ import { TopBar, Footer } from '../../components';
 
 // App Screens
 import {
+  CartScreen,
   OrderScreen,
   ProductScreen,
   DashboardScreen,
@@ -88,6 +89,7 @@ const DashboardRoutes = () => {
               <Route exact path='/dashboard' component={DashboardScreen} />
               <Route exact path='/products' component={ProductScreen} />
               <Route exact path='/orders' component={OrderScreen} />
+              <Route exact path='/cart' component={CartScreen} />
 
               <Redirect to='/dashboard' />
             </Switch>
