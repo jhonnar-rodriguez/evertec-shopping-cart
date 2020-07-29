@@ -13,7 +13,7 @@ trait UserRelationship
     public function cart()
     {
         return $this->hasOne(
-            config( 'business.core.carts.model' )
+            config('business.core.carts.model')
         );
     }
 
@@ -25,9 +25,7 @@ trait UserRelationship
     public function orders()
     {
         return $this->hasMany(
-            config( 'business.core.orders.model' )
+            config('business.core.orders.model')
         );
     }
-
-
 }

@@ -13,11 +13,10 @@ class RemoveCartIdFromOrders extends Migration
      */
     public function up()
     {
-        Schema::table('orders', function (Blueprint $table)
-        {
-            $table->dropForeign( 'orders_cart_id_foreign' );
-            $table->dropIndex( 'orders_cart_id_foreign' );
-            $table->dropColumn( 'cart_id' );
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropForeign('orders_cart_id_foreign');
+            $table->dropIndex('orders_cart_id_foreign');
+            $table->dropColumn('cart_id');
         });
     }
 

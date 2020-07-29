@@ -24,7 +24,8 @@ class CreateOrderRequest extends FormRequest
     {
         return [
             'order_total' => [ 'required', 'numeric', 'min:1' ],
-            'order_status' => [ 'required', 'string', Rule::in( [ 'CREATED' ] ) ],
+            'order_status' => [ 'required', 'string', Rule::in([ 'CREATED' ]) ],
+            'redirect_base' => [ 'required', 'url' ],
         ];
     }
 }

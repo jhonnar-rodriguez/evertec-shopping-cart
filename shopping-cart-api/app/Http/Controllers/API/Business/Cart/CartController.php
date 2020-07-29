@@ -1,7 +1,8 @@
 <?php namespace App\Http\Controllers\API\Business\Cart;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Business\Product\AddProductToCartRequest;
+use App\Http\Requests\Business\Cart\AddItemToCart;
+use App\Http\Requests\Business\Cart\GetFromCartRequest;
 use App\Models\Business\Product\Product;
 use App\Repositories\Business\Cart\CartRepositoryInterface;
 use Illuminate\Http\JsonResponse;
@@ -19,7 +20,7 @@ class CartController extends Controller
      *
      * @param CartRepositoryInterface $cartRepository
      */
-    public function __construct( CartRepositoryInterface $cartRepository )
+    public function __construct(CartRepositoryInterface $cartRepository)
     {
         $this->cartRepository = $cartRepository;
     }
@@ -27,13 +28,13 @@ class CartController extends Controller
     /**
      * Add the given product to the cart
      *
-     * @param AddProductToCartRequest $request
+     * @param AddItemToCart $request
      * @param Product $product
      * @return JsonResponse
      */
-    public function addProductToCart( AddProductToCartRequest $request, Product $product ): JsonResponse
+    public function addProductToCart(AddItemToCart $request, Product $product): JsonResponse
     {
-        $cart = $this->cartRepository->addToCart( $request, $product );
+        $cart = $this->cartRepository->addToCart($request, $product);
 
         return $this->generalResponse(
             $cart['data'],
@@ -49,9 +50,9 @@ class CartController extends Controller
      * @param Product $product
      * @return JsonResponse
      */
-    public function removeProductFromCart( Request $request, Product $product ): JsonResponse
+    public function removeProductFromCart(Request $request, Product $product): JsonResponse
     {
-        $remove = $this->cartRepository->removeFromCart( $request, $product );
+        $remove = $this->cartRepository->removeFromCart($request, $product);
 
         return $this->generalResponse(
             $remove['data'],
@@ -63,12 +64,12 @@ class CartController extends Controller
     /**
      * Get all the products that are in the cart for the logged user
      *
-     * @param Request $request
+     * @param GetFromCartRequest $request
      * @return JsonResponse
      */
-    public function getContent( Request $request ): JsonResponse
+    public function getContent(GetFromCartRequest $request): JsonResponse
     {
-        $cartContent = $this->cartRepository->getContent( $request );
+        $cartContent = $this->cartRepository->getContent($request);
 
         return $this->generalResponse(
             $cartContent['data'],
@@ -83,9 +84,9 @@ class CartController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function clearCartContent( Request $request ): JsonResponse
+    public function clearCartContent(Request $request): JsonResponse
     {
-        $clearCartContent = $this->cartRepository->clearContent( $request );
+        $clearCartContent = $this->cartRepository->clearContent($request);
 
         return $this->generalResponse(
             $clearCartContent['data'],
@@ -100,9 +101,9 @@ class CartController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function getTotal( Request $request ): JsonResponse
+    public function getTotal(Request $request): JsonResponse
     {
-        $cartTotal = $this->cartRepository->getTotal( $request );
+        $cartTotal = $this->cartRepository->getTotal($request);
 
         return $this->generalResponse(
             $cartTotal['data'],
@@ -110,5 +111,4 @@ class CartController extends Controller
             $cartTotal['status_code']
         );
     }
-
 }

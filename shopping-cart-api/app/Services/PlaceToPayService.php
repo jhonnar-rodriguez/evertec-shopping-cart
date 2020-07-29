@@ -15,10 +15,9 @@ class PlaceToPayService
      * @return array[]|null
      * @throws Exception
      */
-    public function createOrder( stdClass $session_data )
+    public function createOrder(stdClass $session_data)
     {
-        try
-        {
+        try {
             $order = $session_data->order;
 
             $paymentAdditionalInfo = PlaceToPay::preparePaymentAdditionalInfo(
@@ -36,48 +35,41 @@ class PlaceToPayService
             );
 
             # Make the request to the PlaceToPay service
-            $requestData = HttpClient::makeRequest( '/api/session', 'POST', $paymentData );
-            $requestStatus = isset( $requestData['status']['status'] ) ? $requestData['status']['status'] : null;
+            $requestData = HttpClient::makeRequest('/api/session', 'POST', $paymentData);
+            $requestStatus = isset($requestData['status']['status']) ? $requestData['status']['status'] : null;
 
-            if ( $requestStatus === "OK" )
-            {
+            if ($requestStatus === "OK") {
                 $orderData = [
                     'success' => true,
-                    'message' => isset( $requestData['status']['message'] ) ? $requestData['status']['message'] : null,
-                    'request_id' => isset( $requestData['requestId'] ) ? $requestData['requestId'] : null,
-                    'process_url' => isset( $requestData['processUrl'] ) ? $requestData['processUrl'] : null,
-                    'code' => config( 'business.http_responses.success.code' ),
+                    'message' => isset($requestData['status']['message']) ? $requestData['status']['message'] : null,
+                    'request_id' => isset($requestData['requestId']) ? $requestData['requestId'] : null,
+                    'process_url' => isset($requestData['processUrl']) ? $requestData['processUrl'] : null,
+                    'return_url' => isset($paymentAdditionalInfo->return_url) ? $paymentAdditionalInfo->return_url : null,
+                    'code' => config('business.http_responses.success.code'),
                 ];
-            }
-            else
-            {
+            } else {
                 $message = "Unexpected output from service, please try again later.";
 
-                if ( isset( $requestData['status']['message'] ) === true )
-                {
+                if (isset($requestData['status']['message']) === true) {
                     $message = $requestData['status']['message'];
-                }
-                elseif ( isset( $requestData['message'] ) === true )
-                {
+                } elseif (isset($requestData['message']) === true) {
                     $message = $requestData['message'];
                 }
 
                 $orderData = [
                     'success' => false,
                     'message' => $message,
-                    'code' => config( 'business.http_responses.bad_request.code' ),
+                    'code' => config('business.http_responses.bad_request.code'),
                 ];
             }
-        }
-        catch ( Exception $exception )
-        {
+        } catch (Exception $exception) {
             # More information about the error
             Log::error(
                 "PlaceToPayService.createOrder: Something went wrong creating the order. Details: " .
                 $exception->getMessage()
             );
 
-            throw new Exception( $exception->getMessage() );
+            throw new Exception($exception->getMessage());
         }
 
         return $orderData;
@@ -90,20 +82,18 @@ class PlaceToPayService
      * @return array[]|null
      * @throws Exception
      */
-    public function getOrder( $request_id )
+    public function getOrder($request_id)
     {
-        try
-        {
+        try {
             # Prepare the data to send the information to PlaceToPay
             $authData = [
                 'auth' => PlaceToPay::prepareAuthData(),
             ];
 
             # Make the request to the PlaceToPay service
-            $orderData = HttpClient::makeRequest( "/api/session/$request_id", 'POST', $authData );
+            $orderData = HttpClient::makeRequest("/api/session/$request_id", 'POST', $authData);
 
-            if ( isset( $orderData['status'] ) === true )
-            {
+            if (isset($orderData['status']) === true) {
                 $orderResponse = $orderData['status'];
 
                 $formattedData = [
@@ -111,9 +101,7 @@ class PlaceToPayService
                     'status' => $orderResponse['status'],
                     'message' => $orderResponse['message'],
                 ];
-            }
-            else
-            {
+            } else {
                 $formattedData = [
                     'success' => false,
                     'message' => "Unexpected server response. Please try again later.",
@@ -121,17 +109,14 @@ class PlaceToPayService
             }
 
             return $formattedData;
-        }
-        catch ( Exception $exception )
-        {
+        } catch (Exception $exception) {
             # More information about the error
             Log::error(
                 "PlaceToPayService.getOrder: Something went wrong getting the order. Details: " .
                 $exception->getMessage()
             );
 
-            throw new Exception( $exception->getMessage() );
+            throw new Exception($exception->getMessage());
         }
     }
-
 }

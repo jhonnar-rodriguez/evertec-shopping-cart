@@ -6,3 +6,4 @@ to make the purchase.
 Read more [here](https://github.com/jhonnar-rodriguez/evertec-shopping-cart/blob/master/shopping-cart-api)
 
 ## Shopping Cart Client
+Read more [here](https://github.com/jhonnar-rodriguez/evertec-shopping-cart/blob/master/shopping-cart-client)

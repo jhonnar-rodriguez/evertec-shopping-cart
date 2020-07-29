@@ -1,8 +1,8 @@
-<?php namespace App\Http\Requests\Business\Product;
+<?php namespace App\Http\Requests\Business\Cart;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddProductToCartRequest extends FormRequest
+class GetFromCartRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class AddProductToCartRequest extends FormRequest
     public function rules()
     {
         return [
-            'quantity' => [ 'required', 'integer' ],
+            'client_key' => [ 'required', 'string' ],
         ];
     }
 }

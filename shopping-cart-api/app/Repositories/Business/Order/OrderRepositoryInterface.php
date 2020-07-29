@@ -14,7 +14,16 @@ interface OrderRepositoryInterface extends BaseInterface
      * @param Cart $cart
      * @return mixed
      */
-    public function create( Request $request, Cart $cart );
+    public function create(Request $request, Cart $cart);
+
+    /**
+     * Based on a given order id we need to recreate the shopping cart
+     *
+     * @param Request $request
+     * @param Order $order
+     * @return mixed
+     */
+    public function reOrder(Request $request, Order $order);
 
     /**
      * Get order using the request id
@@ -23,7 +32,7 @@ interface OrderRepositoryInterface extends BaseInterface
      * @param Order $order
      * @return mixed
      */
-    public function get( Request $request, Order $order );
+    public function get(Request $request, Order $order);
 
     /**
      * Get all orders in the system
@@ -31,6 +40,5 @@ interface OrderRepositoryInterface extends BaseInterface
      * @param Request $request
      * @return mixed
      */
-    public function getAll( Request $request );
-
+    public function getAll(Request $request);
 }
