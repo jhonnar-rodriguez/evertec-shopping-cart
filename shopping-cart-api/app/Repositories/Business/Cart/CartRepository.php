@@ -22,7 +22,7 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
     /**
      * @var
      */
-    private $loggedUser = null;
+    public $loggedUser = null;
 
     /**
      * CartRepository constructor.
@@ -150,7 +150,11 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
             }
 
             return $this->response(
-                $totalProducts,
+                [
+                    'cart_id' => $loggedUserCart->id,
+                    'content' => $totalProducts,
+                    'total_items' => count($totalProducts),
+                ],
                 $message,
                 $statusCode
             );
@@ -339,10 +343,10 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
     /**
      * Create a new cart to the logged user
      *
-     * @param string $client_key Unique client id generated in the client
+     * @inheritDoc
      * @return Cart|null
      */
-    private function createCartStub($client_key)
+    public function createCartStub($client_key, $user_id = null)
     {
         try {
             $newCart = new $this->cart();
@@ -350,6 +354,8 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
 
             if (isset($this->loggedUser->id)) {
                 $newCart->user_id = $this->loggedUser->id;
+            } elseif (is_null($user_id) === false) {
+                $newCart->user_id = $user_id;
             }
 
             if ($newCart->save() === false) {

@@ -1,13 +1,17 @@
 import React from 'react';
+import { createBrowserHistory } from 'history';
 import { AppRouter } from './router';
 import {
   CartState,
-  AlertState,
   AuthState,
+  AlertState,
+  OrderState,
   ProductState,
 } from './context';
 
 import { initAuth } from './config';
+
+const browserHistory = createBrowserHistory();
 
 // Set token global
 initAuth();
@@ -16,11 +20,13 @@ function App() {
   return (
     <AuthState>
       <AlertState>
-        <ProductState>
-          <CartState>
-            <AppRouter />
-          </CartState>
-        </ProductState>
+        <OrderState>
+          <ProductState>
+            <CartState>
+              <AppRouter history={browserHistory} />
+            </CartState>
+          </ProductState>
+        </OrderState>
       </AlertState>
     </AuthState>
   );

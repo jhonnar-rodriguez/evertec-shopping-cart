@@ -15,37 +15,32 @@ class HttpClient
      * @return array
      * @throws Exception
      */
-    public static function makeRequest( $url, $method, $data = [] )
+    public static function makeRequest($url, $method, $data = [])
     {
-        try
-        {
-            $baseUrl = config( 'environment.PLACE_TO_PAY_BASE_URL' );
+        try {
+            $baseUrl = config('environment.PLACE_TO_PAY_BASE_URL');
 
-            if ( empty( $baseUrl ) === true )
-            {
+            if (empty($baseUrl) === true) {
                 return [
                     'success' => false,
                     'message' => 'Environment variable PLACE_TO_PAY_BASE_URL cannot be empty',
-                    'code' => config( 'business.http_responses.bad_request.code' ),
+                    'code' => config('business.http_responses.bad_request.code'),
                 ];
             }
 
-            $request = Http::baseUrl( $baseUrl )
+            $request = Http::baseUrl($baseUrl)
                 ->withoutVerifying()
-                ->$method( $url, $data );
+                ->$method($url, $data);
 
             return $request->throw()->json();
-        }
-        catch ( Exception $exception )
-        {
+        } catch (Exception $exception) {
             # More information about the error
             Log::error(
                 "PlaceToPayService.createOrder: Something went wrong creating the order. Details: " .
                 $exception->getMessage()
             );
 
-            throw new Exception(  $exception->getMessage() );
+            throw new Exception($exception->getMessage());
         }
     }
-
 }

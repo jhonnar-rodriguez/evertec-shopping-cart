@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Box,
@@ -10,9 +10,13 @@ import {
   ListItemText,
 } from '@material-ui/core';
 
-import { CartContext, AlertContext, AuthContext } from '../../context';
+import {
+  CartContext,
+  AlertContext,
+  AuthContext,
+} from '../../context';
 
-import { CustomSnackbar } from '../../components';
+import { CustomSnackbar, SimpleBackdrop } from '../../components';
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -25,30 +29,41 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
+    textAlign: 'end',
   },
   button: {
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
+  warningColor: {
+    color: theme.palette.warning.main,
+  },
 }));
 
-const CartScreen = () => {
+const CartScreen = (props) => {
   const classes = useStyles();
-  const { cartItems, message: cartItemMessage } = useContext(CartContext);
+  const [placingOrder, setPlacingOrder] = useState(false);
+  const { cartId, placeOrder, processUrl, cartItems, message: cartMessages, fireGetCartRequest } = useContext(CartContext);
   const { alert, showAlert } = useContext(AlertContext);
   const { isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
-    if (cartItemMessage) {
-      showAlert(cartItemMessage.message, cartItemMessage.level);
-    }
-  }, [showAlert, cartItemMessage]);
+    fireGetCartRequest();
+  }, []);
 
-  const handleNext = () => {
-    console.log('next');
-  };
+  useEffect(() => {
+    setPlacingOrder(false);
+    if (cartMessages) {
+      showAlert(cartMessages.message, cartMessages.level);
+    }
+  }, [showAlert, cartMessages]);
+
+  useEffect(() => {
+    setPlacingOrder(false);
+    if (processUrl) {
+      window.location.href = processUrl;
+    }
+  }, [processUrl]);
 
   const getCartTotal = () => {
     if (!cartItems.length) {
@@ -58,6 +73,22 @@ const CartScreen = () => {
     return cartItems.reduce((total, cartItem) => {
       return total + (cartItem.quantity * cartItem.price);
     }, 0);
+  };
+
+  const handlePlaceOrder = () => {
+    const cartTotal = getCartTotal();
+
+    if (!cartTotal) {
+      return;
+    }
+    setPlacingOrder(true);
+    const data = {
+      order_total: cartTotal,
+      order_status: 'CREATED',
+      redirect_base: `${process.env.REACT_APP_CLIENT_URL}/orders`,
+    };
+
+    placeOrder(cartId, data);
   };
 
   return (
@@ -115,12 +146,25 @@ const CartScreen = () => {
           <Button
             variant='contained'
             color='primary'
-            onClick={handleNext}
+            onClick={handlePlaceOrder}
             className={classes.button}
             disabled={!cartItems.length || !isLoggedIn}
           >
             Place Order
           </Button>
+
+          {
+            !isLoggedIn && (
+              <Typography
+                variant='caption'
+                display='block'
+                className={classes.warningColor}
+                gutterBottom
+              >
+                You need to be logged in to place an order
+              </Typography>
+            )
+          }
         </div>
 
       </Grid>
@@ -134,6 +178,8 @@ const CartScreen = () => {
           </Box>
         ) : null
       }
+
+      {placingOrder && <SimpleBackdrop />}
     </>
   );
 };

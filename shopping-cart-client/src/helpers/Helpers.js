@@ -26,6 +26,10 @@ const formatResponse = (type, serverMessage) => {
           serverResponse.data.message :
           somethingWentWrong;
     }
+
+    if (serverResponse.status === 401) {
+      localStorage.removeItem('token');
+    }
   } else {
     messageToReturn =
       typeof serverMessage.data.message !== 'undefined' ?
@@ -51,7 +55,6 @@ const generateKey = () => {
   clientId = `_${Math.random().toString(36).substr(2, 9)}`;
   localStorage.setItem('client_key', clientId);
   return clientId;
-
 };
 
 const getCartTotal = (defaultTotal = 0) => {
@@ -62,7 +65,6 @@ const getCartTotal = (defaultTotal = 0) => {
 
   localStorage.setItem('cart_total', defaultTotal);
   return cartTotal;
-
 };
 
 /**
@@ -79,8 +81,17 @@ const saveTokenInLocalStorage = (token) => {
  *
  * @param {*} token
  */
-const removeTokenFromLocalStorage = (token) => {
+const removeTokenFromLocalStorage = () => {
   localStorage.removeItem('token');
+};
+
+const removeClientKeyFromLocalStorage = () => {
+  localStorage.removeItem('cart_total');
+  localStorage.removeItem('client_key');
+};
+
+const saveClientKeyInLocalStorage = (clientKey) => {
+  localStorage.setItem('client_key', clientKey);
 };
 
 export {
@@ -89,4 +100,6 @@ export {
   formatResponse,
   saveTokenInLocalStorage,
   removeTokenFromLocalStorage,
+  saveClientKeyInLocalStorage,
+  removeClientKeyFromLocalStorage,
 };

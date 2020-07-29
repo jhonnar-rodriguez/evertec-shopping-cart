@@ -13,7 +13,7 @@ interface CartRepositoryInterface extends BaseInterface
      * @param Product $product
      * @return mixed
      */
-    public function addToCart( Request $request, Product $product );
+    public function addToCart(Request $request, Product $product);
 
     /**
      * Remove the given product to the cart
@@ -22,7 +22,7 @@ interface CartRepositoryInterface extends BaseInterface
      * @param Product $product
      * @return mixed
      */
-    public function removeFromCart( Request $request, Product $product );
+    public function removeFromCart(Request $request, Product $product);
 
     /**
      * Get all the products that are in the cart for the logged user
@@ -30,7 +30,7 @@ interface CartRepositoryInterface extends BaseInterface
      * @param Request $request
      * @return mixed
      */
-    public function getContent( Request $request );
+    public function getContent(Request $request);
 
     /**
      * Remove the items that belongs to the logged user cart
@@ -38,7 +38,7 @@ interface CartRepositoryInterface extends BaseInterface
      * @param Request $request
      * @return mixed
      */
-    public function clearContent( Request $request );
+    public function clearContent(Request $request);
 
     /**
      * Get the total amount of all the products in the cart for the logged user.
@@ -46,6 +46,12 @@ interface CartRepositoryInterface extends BaseInterface
      * @param Request $request
      * @return mixed
      */
-    public function getTotal( Request $request );
+    public function getTotal(Request $request);
 
+    /**
+     * @param $client_key
+     * @param $user_id
+     * @return mixed
+     */
+    public function createCartStub($client_key, $user_id = null);
 }

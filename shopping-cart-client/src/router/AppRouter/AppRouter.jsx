@@ -9,8 +9,8 @@ import { CartContext } from '../../context';
 // App Router
 import { StoreRoutes } from '..';
 
-const AppRouter = () => {
-
+const AppRouter = (props) => {
+  const { history } = props;
   const { fireGetCartRequest } = useContext(CartContext);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const AppRouter = () => {
 
   return (
     <Router>
-      <StoreRoutes />
+      <StoreRoutes {...history} />
     </Router>
   );
 };

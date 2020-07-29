@@ -57,4 +57,17 @@ Will try to fix all files with errors
 ## Notes
 - If you want the realtime linting while your are writing code on Visual Studio Code you need to install the ESLint extension
 
+## Features
+- Login
+- Logout
+- Product List
+- Add Product To Cart - With|Without Login
+- Place Order
+- Communication with PlaceToPay to generate an order
+- Orders List
+- Re order: A new cart will be created with the same items as the selected order (Previous confirmation)
+
+## In Progress
+- Redirection page after the completed payment process to catch the transaction status.
+
 ## Enjoy!!

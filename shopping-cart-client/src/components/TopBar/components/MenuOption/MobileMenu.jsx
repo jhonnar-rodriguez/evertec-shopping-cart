@@ -47,7 +47,6 @@ const MobileMenu = (props) => {
           vertical: 'top',
           horizontal: 'right',
         }}
-        // keepMounted
         transformOrigin={{
           vertical: 'top',
           horizontal: 'right',
@@ -65,22 +64,23 @@ const MobileMenu = (props) => {
 
         {
           isLoggedIn ? (
-            <>
+            <div>
               <MenuItem
-                component={RouterLink}
                 to='/orders'
+                onClick={handleClose}
+                component={RouterLink}
               >
                 Orders
               </MenuItem>
               <MenuItem
                 color='inherit'
+                style={{ textTransform: 'capitalize' }}
                 onClick={signOutUser}
                 component={Button}
-                style={{ textTransform: 'capitalize' }}
               >
                 Logout
               </MenuItem>
-            </>
+            </div>
           ) : (
             <MenuItem
               component={RouterLink}
@@ -101,8 +101,7 @@ const MobileMenu = (props) => {
 MobileMenu.propTypes = {
   open: PropTypes.bool.isRequired,
   anchorEl: PropTypes.object,
-  // handleMenu: PropTypes.func.isRequired,
-  // handleClose: PropTypes.func.isRequired,
+  setAnchorEl: PropTypes.func.isRequired,
 };
 
 export default MobileMenu;

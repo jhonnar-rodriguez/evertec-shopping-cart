@@ -13,9 +13,9 @@ trait OrderAttribute
      * @param $value
      * @return mixed
      */
-    public function getCreatedAtAttribute( $value )
+    public function getCreatedAtAttribute($value)
     {
-        return Carbon::parse( $value )->diffForHumans();
+        return Carbon::parse($value)->diffForHumans();
     }
 
     /**
@@ -24,9 +24,8 @@ trait OrderAttribute
      * @param $value
      * @return mixed
      */
-    public function getUpdatedAtAttribute( $value )
+    public function getUpdatedAtAttribute($value)
     {
-        return Carbon::parse( $value )->diffForHumans();
+        return Carbon::parse($value)->diffForHumans();
     }
-
 }

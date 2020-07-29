@@ -11,7 +11,7 @@ import {
 } from '@material-ui/icons';
 
 const ShoppingCart = (props) => {
-  const { totalItems } = props;
+  const { totalItems = 0 } = props;
 
   return (
     <Button
@@ -30,7 +30,7 @@ const ShoppingCart = (props) => {
 };
 
 ShoppingCart.propTypes = {
-  totalItems: PropTypes.number.isRequired,
+  totalItems: PropTypes.number,
 };
 
 export default ShoppingCart;

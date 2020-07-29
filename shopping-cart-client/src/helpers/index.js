@@ -4,4 +4,6 @@ export {
   formatResponse,
   saveTokenInLocalStorage,
   removeTokenFromLocalStorage,
+  removeClientKeyFromLocalStorage,
+  saveClientKeyInLocalStorage,
 } from './Helpers';

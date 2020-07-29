@@ -14,6 +14,10 @@ const types = {
   USER_IS_LOGGED: '[auth] user is logged in',
   ADD_ITEM_ERROR: '[carts] request error',
   SENDING_REQUEST: '[generic] sending request',
+  ORDER_GENERATED: '[orders] new order has been generated',
+  GET_ORDER_ERROR: '[orders] something went wrong getting the order',
+  ORDERS_RECEIVED: '[orders] orders were received',
+  FIRE_GET_ORDERS: '[orders] begin the request to get the orders',
 };
 
 export default types;

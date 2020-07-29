@@ -16,10 +16,12 @@ const CartState = (props) => {
   const { children } = props;
   const initialState = {
     total: 0,
+    cartId: 0,
     loading: false,
     message: null,
     getCart: false,
     cartItems: [],
+    processUrl: '',
   };
 
   // Dispatch Actions
@@ -153,6 +155,72 @@ const CartState = (props) => {
     }
   };
 
+  /**
+   * Generate a new order in the system
+   *
+   * @param {*} cartId
+   * @param {*} data
+   */
+  const placeOrder = async (cartId, data) => {
+    try {
+      const clientKey = generateKey();
+
+      const response = await axiosClient.post(`api/business/orders/${cartId}`, { ...data, clientKey });
+      if (response.status === 201) {
+        const serverMessage = formatResponse('success', response);
+        dispatch({
+          type: types.ORDER_GENERATED,
+          payload: {
+            message: serverMessage,
+            level: 'success',
+            data: response.data.data,
+          },
+        });
+      } else {
+        const serverMessage = formatResponse('error', response);
+
+        dispatch({
+          type: types.ADD_ITEM_ERROR,
+          payload: {
+            message: serverMessage,
+            category: 'error',
+          },
+        });
+      }
+    } catch (error) {
+      let serverMessage = formatResponse('error', error);
+      try {
+        let customMessage = [];
+        const responseStatusCode = error.response.status;
+
+        // Format the output message to an array
+        if (!Array.isArray(serverMessage) && responseStatusCode === 422) {
+          Object.keys(serverMessage).forEach((key) => {
+            const element = serverMessage[key][0];
+            customMessage = [
+              ...customMessage,
+              element,
+            ];
+          });
+
+          if (customMessage.length) {
+            serverMessage = customMessage;
+          }
+        }
+      } catch (error) {
+        serverMessage = 'Something went wrong placing your order';
+      }
+
+      dispatch({
+        type: types.ADD_ITEM_ERROR,
+        payload: {
+          message: serverMessage,
+          level: 'error',
+        },
+      });
+    }
+  };
+
   const clearMessage = () => {
     dispatch({
       type: types.CLEAR_MESSAGE,
@@ -163,10 +231,13 @@ const CartState = (props) => {
     <CartContext.Provider
       value={{
         total: state.total,
+        cartId: state.cartId,
         loading: state.loading,
         message: state.message,
         cartItems: state.cartItems,
+        processUrl: state.processUrl,
         addItem,
+        placeOrder,
         clearMessage,
         fireGetCartRequest,
       }}

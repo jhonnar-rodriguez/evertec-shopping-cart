@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const StoreRoutes = () => {
+const StoreRoutes = (props) => {
   const classes = useStyles();
 
   return (
@@ -92,7 +92,8 @@ const StoreRoutes = () => {
               <PublicRoute path='/products' exact restricted={false} component={ProductScreen} />
               <PublicRoute path='/cart' exact restricted={false} component={CartScreen} />
               <PublicRoute path='/signin' exact restricted={true} component={SignInScreen} />
-              <PrivateRoute path='/orders' exact component={OrderScreen} />
+              <PrivateRoute {...props} path='/orders' exact component={OrderScreen} />
+              <PrivateRoute path='/orders/:id' exact component={OrderScreen} />
               <Redirect to='/dashboard' />
             </Switch>
           </Grid>
