@@ -22,7 +22,9 @@ Make sure your server meets the following requirements:
 
     ```cp .env.example .env```
 
-- Setup your credentials in the .env file
+- Setup your credentials in the .env file. The following variables are mandatory:
+    * REACT_APP_CLIENT_URL: Frontend running url. Example: http://localhost:3000
+    * REACT_APP_BACKEND_URL: Backend running url. Example: http://localhost:5000/shopping-cart-api/public
  
 - Install Dependencies
 
