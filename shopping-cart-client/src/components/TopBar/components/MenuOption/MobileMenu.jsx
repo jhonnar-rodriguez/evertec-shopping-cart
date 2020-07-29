@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import {
@@ -12,9 +12,22 @@ import { AccountCircle } from '@material-ui/icons';
 import { AuthContext } from '../../../../context';
 
 const MobileMenu = (props) => {
-  const { open, anchorEl, handleMenu, handleClose } = props;
-  console.log(typeof anchorEl);
-  const { signOutUser } = useContext(AuthContext);
+  const { open, anchorEl, setAnchorEl } = props;
+  const { isLoggedIn, signOutUser } = useContext(AuthContext);
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  useEffect(() => {
+    return () => {
+      handleClose();
+    };
+  }, []);
 
   return (
     <>
@@ -34,7 +47,7 @@ const MobileMenu = (props) => {
           vertical: 'top',
           horizontal: 'right',
         }}
-        keepMounted
+        // keepMounted
         transformOrigin={{
           vertical: 'top',
           horizontal: 'right',
@@ -43,26 +56,43 @@ const MobileMenu = (props) => {
         onClose={handleClose}
       >
         <MenuItem
-          component={RouterLink}
           to='/products'
+          onClick={handleClose}
+          component={RouterLink}
         >
           Products
         </MenuItem>
 
-        <MenuItem
-          component={RouterLink}
-          to='/orders'
-        >
-          Orders
-        </MenuItem>
-        <MenuItem
-          color='inherit'
-          onClick={signOutUser}
-          component={Button}
-          style={{ textTransform: 'capitalize' }}
-        >
-          Logout
-        </MenuItem>
+        {
+          isLoggedIn ? (
+            <>
+              <MenuItem
+                component={RouterLink}
+                to='/orders'
+              >
+                Orders
+              </MenuItem>
+              <MenuItem
+                color='inherit'
+                onClick={signOutUser}
+                component={Button}
+                style={{ textTransform: 'capitalize' }}
+              >
+                Logout
+              </MenuItem>
+            </>
+          ) : (
+            <MenuItem
+              component={RouterLink}
+              color='inherit'
+              to='/signin'
+              style={{ textTransform: 'capitalize' }}
+              onClick={handleClose}
+            >
+              Login
+            </MenuItem>
+          )
+        }
       </Menu>
     </>
   );
@@ -70,9 +100,9 @@ const MobileMenu = (props) => {
 
 MobileMenu.propTypes = {
   open: PropTypes.bool.isRequired,
-  // anchorEl: PropTypes.isRequired,
-  handleMenu: PropTypes.func.isRequired,
-  handleClose: PropTypes.func.isRequired,
+  anchorEl: PropTypes.object,
+  // handleMenu: PropTypes.func.isRequired,
+  // handleClose: PropTypes.func.isRequired,
 };
 
 export default MobileMenu;

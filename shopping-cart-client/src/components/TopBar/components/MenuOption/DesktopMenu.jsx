@@ -7,7 +7,7 @@ import {
 import { AuthContext } from '../../../../context';
 
 const DesktopMenu = () => {
-  const { signOutUser } = useContext(AuthContext);
+  const { signOutUser, isLoggedIn } = useContext(AuthContext);
 
   return (
     <>
@@ -18,19 +18,34 @@ const DesktopMenu = () => {
       >
         Products
       </Button>
-      <Button
-        component={RouterLink}
-        color='inherit'
-        to='/orders'
-      >
-        Orders
-      </Button>
-      <Button
-        color='inherit'
-        onClick={signOutUser}
-      >
-        Logout
-      </Button>
+
+      {
+        isLoggedIn ? (
+          <>
+            <Button
+              component={RouterLink}
+              color='inherit'
+              to='/orders'
+            >
+              Orders
+            </Button>
+            <Button
+              color='inherit'
+              onClick={signOutUser}
+            >
+              Logout
+            </Button>
+          </>
+        ) : (
+          <Button
+            component={RouterLink}
+            color='inherit'
+            to='/signin'
+          >
+            Login
+          </Button>
+        )
+      }
     </>
   );
 };

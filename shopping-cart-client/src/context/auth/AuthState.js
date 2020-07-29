@@ -39,7 +39,6 @@ const AuthState = (props) => {
       const response = await axiosClient.post('/api/login', data);
 
       if (response.status === 200) {
-        console.log('response.data.firstName', response.data);
         dispatch({
           type: types.LOGIN_SUCCESS,
           payload: {

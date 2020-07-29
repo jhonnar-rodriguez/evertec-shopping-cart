@@ -1,45 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   BrowserRouter as Router,
-  Switch,
 } from 'react-router-dom';
 
 // App Context
-import { AuthContext } from '../../context';
-
-// HOC
-import {
-  PrivateRoutes,
-  PublicRoutes,
-} from '../../hoc';
+import { CartContext } from '../../context';
 
 // App Router
-import { DashboardRoutes } from '..';
-
-// App Screens
-import { SignInScreen } from '../../screens';
+import { StoreRoutes } from '..';
 
 const AppRouter = () => {
-  const { isLoggedIn } = useContext(AuthContext);
+
+  const { fireGetCartRequest } = useContext(CartContext);
+
+  useEffect(() => {
+    fireGetCartRequest();
+  }, []);
 
   return (
     <Router>
-      <>
-        <Switch>
-          <PublicRoutes
-            exact
-            path='/login'
-            isAuthenticated={isLoggedIn}
-            component={SignInScreen}
-          />
-
-          <PrivateRoutes
-            path='/'
-            isAuthenticated={isLoggedIn}
-            component={DashboardRoutes}
-          />
-        </Switch>
-      </>
+      <StoreRoutes />
     </Router>
   );
 };

@@ -11,7 +11,7 @@ import { CustomSnackbar } from '../../components';
 
 const DashboardScreen = () => {
 
-  const { message: cartItemMessage, fireGetCartRequest } = useContext(CartContext);
+  const { message: cartItemMessage } = useContext(CartContext);
   const { alert, showAlert } = useContext(AlertContext);
 
   useEffect(() => {
@@ -19,10 +19,6 @@ const DashboardScreen = () => {
       showAlert(cartItemMessage.message, cartItemMessage.level);
     }
   }, [showAlert, cartItemMessage]);
-
-  useEffect(() => {
-    fireGetCartRequest();
-  }, []);
 
   return (
     <>

@@ -12,23 +12,14 @@ const MenuOption = () => {
   const theme = useTheme();
   const isMobileView = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   return (
     <>
       {
         isMobileView ? (
           <MobileMenu
             open={open}
+            setAnchorEl={setAnchorEl}
             anchorEl={anchorEl}
-            handleMenu={handleMenu}
-            handleClose={handleClose}
           />
         ) : <DesktopMenu />
       }

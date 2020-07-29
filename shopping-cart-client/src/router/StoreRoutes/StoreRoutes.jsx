@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Redirect, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -16,9 +16,11 @@ import { TopBar, Footer } from '../../components';
 import {
   CartScreen,
   OrderScreen,
+  SignInScreen,
   ProductScreen,
   DashboardScreen,
 } from '../../screens';
+import { PublicRoute, PrivateRoute } from '../../hoc';
 
 const drawerWidth = 240;
 
@@ -67,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DashboardRoutes = () => {
+const StoreRoutes = () => {
   const classes = useStyles();
 
   return (
@@ -86,11 +88,11 @@ const DashboardRoutes = () => {
             spacing={3}
           >
             <Switch>
-              <Route exact path='/dashboard' component={DashboardScreen} />
-              <Route exact path='/products' component={ProductScreen} />
-              <Route exact path='/orders' component={OrderScreen} />
-              <Route exact path='/cart' component={CartScreen} />
-
+              <PublicRoute path='/dashboard' exact restricted={false} component={DashboardScreen} />
+              <PublicRoute path='/products' exact restricted={false} component={ProductScreen} />
+              <PublicRoute path='/cart' exact restricted={false} component={CartScreen} />
+              <PublicRoute path='/signin' exact restricted={true} component={SignInScreen} />
+              <PrivateRoute path='/orders' exact component={OrderScreen} />
               <Redirect to='/dashboard' />
             </Switch>
           </Grid>
@@ -104,4 +106,4 @@ const DashboardRoutes = () => {
   );
 };
 
-export default DashboardRoutes;
+export default StoreRoutes;

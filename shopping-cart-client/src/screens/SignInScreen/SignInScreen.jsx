@@ -18,7 +18,7 @@ import {
 } from '../../context';
 
 // General Components
-import { Footer, CustomSnackbar, SimpleBackdrop } from '../../components';
+import { CustomSnackbar, SimpleBackdrop } from '../../components';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -152,9 +152,6 @@ const SignInScreen = () => {
             </Button>
           </form>
         </div>
-        <Box mt={8}>
-          <Footer />
-        </Box>
       </Container>
 
       {
